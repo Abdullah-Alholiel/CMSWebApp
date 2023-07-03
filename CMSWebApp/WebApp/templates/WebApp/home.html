@@ -1,0 +1,93 @@
+{% extends "WebApp/base.html" %}
+
+{% block content %}
+  <!-- Navigation Section -->
+  <div class="col-md-12">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Computing MSc</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Courses</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contact Us</a>
+          </li>
+          <!-- Add more navigation items here -->
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Welcome Section -->
+  <div class="col-md-12">
+    <h2>Welcome to Computing MSc - Abdullah Alholaiel & Nahal</h2>
+  </div>
+
+  <!-- Course List -->
+<div class="col-md-8">
+  <h3>Courses</h3>
+
+  <!-- Example Course 1 -->
+  <ul class="list-group">
+    <li class="list-group-item list-group-item-light">
+      <h4>Course 1</h4>
+      <ul>
+        <li>Module 1.1</li>
+        <li>Module 1.2</li>
+        <li>Module 1.3</li>
+        <!-- Add more modules here -->
+      </ul>
+    </li>
+
+    <!-- Example Course 2 -->
+    <li class="list-group-item list-group-item-light">
+      <h4>Course 2</h4>
+      <ul>
+        <li>Module 2.1</li>
+        <li>Module 2.2</li>
+        <!-- Add more modules here -->
+      </ul>
+    </li>
+
+    <!-- Example Course 3 -->
+    <li class="list-group-item list-group-item-light">
+      <h4>Course 3</h4>
+      <ul>
+        <li>Module 3.1</li>
+        <li>Module 3.2</li>
+        <li>Module 3.3</li>
+        <!-- Add more modules here -->
+      </ul>
+    </li>
+  </ul>
+</div>
+{% endblock %}
+
+{% block sidebar %}
+  <!-- Sidebar for Weather Data and Other Lists -->
+  <div class="col-md-4">
+    <h3>Current Weather</h3>
+    <p class='text-muted'>Cities across United Kingdom</p>
+    <ul class="list-group">
+      {% for weather in weather_data %}
+      <li class="list-group-item list-group-item-light">{{ weather.city }}: {{ weather.description }}, {{ weather.temperature }}&deg;C</li>
+      {% endfor %}
+    </ul>
+
+    <h3>Other Information</h3>
+
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-light">Latest Issues Reported</li>
+      <li class="list-group-item list-group-item-light">IT Policies</li>
+      <li class="list-group-item list-group-item-light">IT Regulations</li>
+      <li class="list-group-item list-group-item-light">Upcoming Events</li>
+    </ul>
+  </div>
+{% endblock %}
