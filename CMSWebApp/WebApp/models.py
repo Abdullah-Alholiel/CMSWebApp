@@ -1,23 +1,23 @@
 from django.db import models
 from django.contrib.auth.models import User
+from users.models import Student
 
 
+# class Student(User):
+#     # Inherit from the built-in Django User model
 
-class Student(User):
-    # Inherit from the built-in Django User model
+#     # Additional fields specific for Students
+#     date_of_birth = models.DateField()  # Date of birth of the student
+#     address = models.CharField(max_length=255)  # Address of the student
+#     city = models.CharField(max_length=255)  # City of the student
+#     country = models.CharField(max_length=255)  # Country of the student
 
-    # Additional fields specific for Students
-    date_of_birth = models.DateField()  # Date of birth of the student
-    address = models.CharField(max_length=255)  # Address of the student
-    city = models.CharField(max_length=255)  # City of the student
-    country = models.CharField(max_length=255)  # Country of the student
+#     # Image field to store student's photo, uploaded images will be stored in 'student_photos' directory
+#     photo = models.ImageField(upload_to='student_photos/')
 
-    # Image field to store student's photo, uploaded images will be stored in 'student_photos' directory
-    photo = models.ImageField(upload_to='student_photos/')
-
-    class Meta:
-        verbose_name = 'Student'
-        verbose_name_plural = 'Students'
+#     class Meta:
+#         verbose_name = 'Student'
+#         verbose_name_plural = 'Students'
 
 class Module(models.Model):
     # Fields for Module details

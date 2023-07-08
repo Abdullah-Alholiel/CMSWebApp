@@ -1,4 +1,4 @@
-{% extends "itreporting/base.html" %}
+{% extends "WebApp/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
 
@@ -6,15 +6,15 @@
 
     <div class="media">
     
-        <p><img class="rounded-circle account-img" src="{{user.profile.image.url}}"></p>
+        <p><img class="rounded-circle account-img" src="{{student.photo.url}}"></p>
         
         <div class="media-body">
         
-            <h2 class="account-heading">{{user.profile}}</h2>
+            <h2 class="account-heading">{{student.user.username}}</h2>
             
-            <p class="text-secondary">{{user.username}}</p>
+            <p class="text-secondary">{{student.user}}</p>
             
-            <p class="text-secondary">{{user.email}}</p>
+            <p class="text-secondary">{{student.user.email}}</p>
         
         </div>
     

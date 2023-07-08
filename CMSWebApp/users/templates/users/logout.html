@@ -1,4 +1,4 @@
-{% extends "itreporting/base.html" %}
+{% extends "WebApp/base.html" %}
 
 {% block content %}
 
@@ -6,8 +6,8 @@
 
 <div class="border-top pt-3">
 
-<small class="text-muted"><a class="ml-2" href="{% url 'login' %}">Login</a></small>
+<small class="text-muted"><a class="ml-2" href="{% url 'users:login' %}">Login</a></small>
 
-</div>
+</div>-
 
 {% endblock content %}

@@ -26,7 +26,7 @@ def list_modules(request):
     return render(request, 'list_modules.html', {'modules': modules})
 
 @login_required
-def register(request, module_id):
+def registermod(request, module_id):
     module = Module.objects.get(id=module_id)
     student = request.user.student
     registration = Registration(student=student, module=module)
