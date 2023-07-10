@@ -7,9 +7,9 @@ def home(request):
     return render(request, 'WebApp/home.html', {'courses': courses})
 
 def about_us(request):
-    return render(request, 'about.html')
+    return render(request, 'WebApp/about.html')
 
-def contact_us(request):
+def contact(request):
     if request.method == 'POST':
         # Handle contact form submission
         name = request.POST.get('name')
@@ -17,13 +17,13 @@ def contact_us(request):
         subject = request.POST.get('subject')
         message = request.POST.get('message')
         # TODO: Send email using the provided information
-        return redirect('contact_us')
+        return redirect('contact')
     else:
-        return render(request, 'contact_us.html')
+        return render(request, 'WebApp/contact.html')
 
 def list_modules(request):
     modules = Module.objects.all()
-    return render(request, 'list_modules.html', {'modules': modules})
+    return render(request, 'WebApp/ListOfModules.html', {'modules': modules})
 
 @login_required
 def registermod(request, module_id):

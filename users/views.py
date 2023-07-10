@@ -14,7 +14,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 @csrf_exempt  
-
 def register(request):
     if request.method == 'POST':
         form = StudentRegistrationForm(request.POST, request.FILES)
@@ -28,12 +27,17 @@ def register(request):
                 country=form.cleaned_data['country'],
                 photo=form.cleaned_data['photo']
             )
+            messages.success(request, f'Your account has been created! Now you can login!')
             login(request, user)
             return redirect('login')
+        else:
+            print(form.errors)
     else:
         form = StudentRegistrationForm()
 
-    return render(request, 'users/register.html', {'form': form})
+    return render(request, 'users/register.html', {'form': form })
+
+
 
 
 # Home page view
@@ -92,4 +96,4 @@ def profile(request):
         'u_form': u_form,
         's_form': s_form
     }
-    return render(request, 'profile.html', context)
+    return render(request, 'users/profile.html', context)

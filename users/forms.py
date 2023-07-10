@@ -9,7 +9,7 @@ class StudentRegistrationForm(UserCreationForm):
     address = forms.CharField(max_length=255)
     city = forms.CharField(max_length=255)
     country = forms.CharField(max_length=255)
-    photo = forms.ImageField()
+    photo = forms.ImageField(required=False)
 
     class Meta:
         model = User

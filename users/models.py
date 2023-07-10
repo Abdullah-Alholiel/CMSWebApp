@@ -1,6 +1,7 @@
 from django.db import models
+from django import forms
 from django.contrib.auth.models import User
-from django.core.validators import RegexValidator
+
 
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')
@@ -8,7 +9,7 @@ class Student(models.Model):
     address = models.CharField(max_length=255)  # Address of the student
     city = models.CharField(max_length=255)  # City of the student
     country = models.CharField(max_length=255)  # Country of the student
-    photo = models.ImageField(upload_to='student_photos/', blank=True)  # Student's photo
+    photo = models.ImageField(upload_to='student_photos/', blank=True, null=True)  # Student's photo
 
     def __str__(self):
         return self.user.username

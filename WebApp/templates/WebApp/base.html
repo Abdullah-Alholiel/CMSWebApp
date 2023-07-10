@@ -36,9 +36,9 @@
                         <a class="nav-item nav-link" href="{% url 'WebApp:home' %}">Home</a>
                         <a class="nav-item nav-link" href="{% url 'WebApp:about' %}">About</a>
                         <a class="nav-item nav-link" href="{% url 'WebApp:list_modules' %}">Course Modules</a>
-                        <a class="nav-item nav-link" href="">Contact</a>
+                        <a class="nav-item nav-link" href="{% url 'WebApp:contact' %}">Contact Us</a>
                     </div>
-                    <!-- Navbar Right Side -->
+                    <!-- Navbar Right Side -->  
                     <div class="navbar-nav">
                         {% if user.is_authenticated %}
                         <a class="nav-item nav-link" href="">Report New Issue</a>

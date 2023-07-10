@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from users.models import Student
 
 
@@ -35,7 +35,7 @@ class Module(models.Model):
 
     # Many-to-many relationship with Course model
     # This allows multiple courses to have the same module
-    courses = models.ManyToManyField('Course')
+    courses = models.ManyToManyField('Group')
 
     class Meta:
         # Ensuring that the combination of name and code is unique
@@ -58,10 +58,10 @@ class Registration(models.Model):
 
 
 
-class Course(models.Model):
-    name = models.CharField(max_length=255)
-    code = models.CharField(max_length=255)
-    description = models.TextField()
+# class Course(models.Model):
+#     name = models.CharField(max_length=255)
+#     code = models.CharField(max_length=255)
+#     description = models.TextField()
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
