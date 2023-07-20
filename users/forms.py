@@ -1,9 +1,10 @@
 from django import forms
-from .models import Student
+from .models import Student, Group
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 class StudentRegistrationForm(UserCreationForm):
+    course = forms.ModelChoiceField(queryset=Group.objects.all())
     email = forms.EmailField(required=False)
     date_of_birth = forms.DateField(help_text='Required. Format: YYYY-MM-DD')
     address = forms.CharField(max_length=255)
@@ -13,7 +14,8 @@ class StudentRegistrationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2', 'first_name', 'last_name', 'date_of_birth', 'address', 'city', 'country', 'photo']
+        fields = ['username', 'email', 'course', 'password1', 'password2', 'first_name', 'last_name', 'date_of_birth', 'address', 'city', 'country', 'photo']
+    
 
 class UserUpdateForm(forms.ModelForm):
 

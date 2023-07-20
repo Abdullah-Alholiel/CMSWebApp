@@ -1,3 +1,4 @@
+from django import forms
 from django.contrib import messages
 from django.shortcuts import render
 8
@@ -70,30 +71,29 @@ def logout_view(request):
 
 @login_required    
 def profile(request):
+
     try:
-        student = request.user.student_profile
+        student = request.user.student_profile 
     except Student.DoesNotExist:
         student = None
+        
+    u_form = UserUpdateForm(instance=request.user)   
+    s_form = StudentRegistrationForm(instance=student)
 
     if request.method == 'POST':
-        u_form = UserUpdateForm(request.POST, instance=request.user)  
-        s_form = StudentRegistrationForm(request.POST, instance=student) 
-        if u_form.is_valid() and s_form.is_valid():
-            u_form.save()
-            if student is None:
-                student = s_form.save(commit=False)
-                student.user = request.user
-                student.save()
-            else:
-                s_form.save()
-            messages.success(request, 'Your profile has been updated!')
-            return redirect('profile')
-    else:         
-        u_form = UserUpdateForm(instance=request.user)         
-        s_form = StudentRegistrationForm(instance=student)         
+       u_form = UserUpdateForm(request.POST, instance=request.user) 
+       s_form = StudentRegistrationForm(request.POST, instance=student)
+
+    if u_form.is_valid() and s_form.is_valid():
+       student = forms.save(commit=False)
+       student.course = s_form.cleaned_data["course"] 
+        
+       student.save()
 
     context = {
-        'u_form': u_form,
-        's_form': s_form
+        "u_form": u_form,  
+        "s_form": s_form,
+        "student": student   
     }
-    return render(request, 'users/profile.html', context)
+
+    return render(request, "users/profile.html", context)

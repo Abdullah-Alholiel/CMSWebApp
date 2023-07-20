@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Course, Module, Student, Registration
+from .models import Module, Registration
+from django.contrib.auth.models import Group
 
 def home(request):
-    courses = Course.objects.all()
+    courses = Group.objects.all()
     return render(request, 'WebApp/home.html', {'courses': courses})
 
 def about_us(request):

@@ -1,10 +1,21 @@
 from django.db import models
 from django import forms
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
+@login_required
+def profile(request):
+    student = request.user.student_profile  
+    context = {
+        'student': student,
+        'course': student.course  
+    }
+    return render(request, 'users/profile.html', context)
 
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')
+    course = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True, related_name='student')
     date_of_birth = models.DateField()  # Date of birth of the student
     address = models.CharField(max_length=255)  # Address of the student
     city = models.CharField(max_length=255)  # City of the student
