@@ -22,9 +22,10 @@ def contact(request):
     else:
         return render(request, 'WebApp/contact.html')
 
-def list_modules(request):
-    modules = Module.objects.all()
-    return render(request, 'WebApp/ListOfModules.html', {'modules': modules})
+def list_modules(request, course_id):
+    course = Group.objects.get(pk=course_id)
+    modules = Module.objects.filter(course=course)
+    return render(request, 'WebApp/list_modules.html', {'modules': modules, 'course_id': course_id})
 
 @login_required
 def registermod(request, module_id):
