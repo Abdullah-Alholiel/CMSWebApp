@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+
+from WebApp.forms import YoutubeForm
 from .models import Module, Registration
 from django.contrib.auth.models import Group
+from youtubesearchpython import VideosSearch
 
 def home(request):
     courses = Group.objects.all()
@@ -40,3 +43,36 @@ def unregister(request, registration_id):
     registration = Registration.objects.get(id=registration_id)
     registration.delete()
     return redirect('list_modules')
+
+def youtube(request):
+    if request.method == 'POST':
+        form = YoutubeForm(request.POST)
+        text = request.POST['text']
+        video = VideosSearch(text, limit = 5)
+        result_list = []
+        for i in video.result()['result']:
+            result_dict = {
+                'input': text,
+                'title': i['title'],
+                'duration': i['duration'],
+                'thumbnail': i['thumbnails'][0]['url'],
+                'channel' : i['channel']['name'],
+                'link': i['link'],
+                'views': i['viewCount']['short'],
+                'published':i['publishedTime'],
+            }
+            desc = ''
+            if i['descriptionSnippet']:
+                for j in i['descriptionSnippet']:
+                    desc += j['text']
+                result_dict['description'] = desc
+            result_list.append(result_dict)
+        context = {
+            'form': form,
+            'results': result_list
+        }
+        return render(request, 'WebApp/youtube.html', context)
+    else: 
+        form = YoutubeForm()
+    context = {'form': form}
+    return render(request, "WebApp/youtube.html", context)
