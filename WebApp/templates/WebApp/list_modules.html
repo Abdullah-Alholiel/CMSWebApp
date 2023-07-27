@@ -1,58 +1,21 @@
 {% extends "WebApp/base.html" %}
 
 {% block content %}
-  <!-- Navigation Section -->
-  <div class="col-md-12">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Home</a>
-      <a class="navbar-brand" href="#">Courses</a>
-      <a class="navbar-brand" href="#">Contact Us</a>
-      <!-- Add more navigation items here -->
-    </nav>
+
+<!-- Course and Modules Section -->
+<div class="col-md-8">
+  <h3>{{ course.name }}</h3>
+  <div class="list-group">
+    {% for module in modules %}
+      <div class="list-group-item">
+        <h5>{{ module.name }}</h5>
+        <a href="{% url 'registermod' module.id %}" class="btn btn-primary">Register</a>
+        <a href="{% url 'unregister' module.id %}" class="btn btn-danger">Unregister</a>
+      </div>
+    {% endfor %}
   </div>
+</div>
 
-  <!-- Course and Modules Section -->
-  <div class="col-md-8">
-    <h3>Courses and Modules</h3>
-
-    <!-- Course 1 -->
-    <div class="list-group">
-      <h4>Course 1</h4>
-
-      <!-- Module 1 -->
-      <div class="list-group-item">
-        <h5>Module 1.1</h5>
-        <button class="btn btn-primary">Register</button>
-        <button class="btn btn-danger">Unregister</button>
-      </div>
-
-      <!-- Module 2 -->
-      <div class="list-group-item">
-        <h5>Module 1.2</h5>
-        <button class="btn btn-primary">Register</button>
-        <button class="btn btn-danger">Unregister</button>
-      </div>
-    </div>
-
-    <!-- Course 2 -->
-    <div class="list-group">
-      <h4>Course 2</h4>
-
-      <!-- Module 1 -->
-      <div class="list-group-item">
-        <h5>Module 2.1</h5>
-        <button class="btn btn-primary">Register</button>
-        <button class="btn btn-danger">Unregister</button>
-      </div>
-
-      <!-- Module 2 -->
-      <div class="list-group-item">
-        <h5>Module 2.2</h5>
-        <button class="btn btn-primary">Register</button>
-        <button class="btn btn-danger">Unregister</button>
-      </div>
-    </div>
-  </div>
 {% endblock %}
 
 {% block sidebar %}

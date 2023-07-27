@@ -28,9 +28,9 @@ def register(request):
                 country=form.cleaned_data['country'],
                 photo=form.cleaned_data['photo']
             )
-            messages.success(request, f'Your account has been created! Now you can login!')
+            messages.success(request, f'Your account has been created{user.username}! Now you can login!')
             login(request, user)
-            return redirect('login')
+            return redirect('users:login')
         else:
             print(form.errors)
     else:
@@ -46,7 +46,7 @@ def home(request):
     return render(request, 'home.html')
 
 # Login view
-def login_view(request):
+def login(request, form):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -64,7 +64,7 @@ def login_view(request):
     return render(request, 'users/login.html', {'form': form})
 
 # Logout view
-def logout_view(request):
+def logout(request):
     logout(request)
     return redirect(request, 'home.html')
 

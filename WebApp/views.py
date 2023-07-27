@@ -23,9 +23,9 @@ def contact(request):
         return render(request, 'WebApp/contact.html')
 
 def list_modules(request, course_id):
-    course = Group.objects.get(pk=course_id)
-    modules = Module.objects.filter(course=course)
-    return render(request, 'WebApp/list_modules.html', {'modules': modules, 'course_id': course_id})
+    course = Group.objects.get(id=course_id)
+    modules = Module.objects.filter(Group=course)
+    return render(request, 'WebApp/list_modules.html', {'modules': modules, 'course': course})
 
 @login_required
 def registermod(request, module_id):
@@ -40,3 +40,7 @@ def unregister(request, registration_id):
     registration = Registration.objects.get(id=registration_id)
     registration.delete()
     return redirect('list_modules')
+
+def courses(request):
+    courses = Group.objects.all()
+    return render(request, 'WebApp/courses.html', {'courses': courses})

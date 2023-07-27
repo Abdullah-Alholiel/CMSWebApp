@@ -4,14 +4,6 @@ from django.contrib.auth.models import User, Group
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
-@login_required
-def profile(request):
-    student = request.user.student_profile  
-    context = {
-        'student': student,
-        'course': student.course  
-    }
-    return render(request, 'users/profile.html', context)
 
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')
