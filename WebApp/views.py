@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+
+from WebApp.forms import YoutubeForm
 from .models import Module, Registration
 from django.contrib.auth.models import Group
+from youtubesearchpython import VideosSearch
 
 def home(request):
     courses = Group.objects.all()
@@ -40,7 +43,3 @@ def unregister(request, registration_id):
     registration = Registration.objects.get(id=registration_id)
     registration.delete()
     return redirect('list_modules')
-
-def courses(request):
-    courses = Group.objects.all()
-    return render(request, 'WebApp/courses.html', {'courses': courses})
