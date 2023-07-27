@@ -27,7 +27,7 @@ def contact(request):
 
 def list_modules(request, course_id):
     course = Group.objects.get(id=course_id)
-    modules = Module.objects.filter(Group=course)
+    modules = Module.objects.filter(groups=course)
     return render(request, 'WebApp/list_modules.html', {'modules': modules, 'course': course})
 
 @login_required
