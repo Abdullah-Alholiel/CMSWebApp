@@ -10,6 +10,7 @@ urlpatterns = [
     path('about/', views.about_us, name='about'),
     path('contact/', views.contact, name='contact'),
     path('list_modules/<int:course_id>/', views.list_modules, name='list_modules'),
+    path('module_detail/<int:module_id>/', views.module_detail, name='module_detail'),
     path('registermod/<int:module_id>/', views.registermod, name='registermod'),
     path('unregister/<int:registration_id>/', views.unregister, name='unregister'),
     path('logout', auth_views.LogoutView.as_view(template_name = 'users/logout.html'), name='logout'),

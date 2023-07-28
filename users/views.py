@@ -73,7 +73,7 @@ def logout(request):
 def profile(request):
 
     try:
-        student = request.user.student_profile 
+        student = request.user.student
     except Student.DoesNotExist:
         student = None
         

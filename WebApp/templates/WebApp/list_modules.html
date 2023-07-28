@@ -8,9 +8,8 @@
   <div class="list-group">
     {% for module in modules %}
       <div class="list-group-item">
-        <h5>{{ module.name }}</h5>
-        <a href="{% url 'WebApp:registermod' module.id %}" class="btn btn-primary">Register</a>
-        <a href="{% url 'WebApp:unregister' module.id %}" class="btn btn-danger">Unregister</a>
+        <h5><a href="{% url 'WebApp:module_detail' module.id %}">{{ module.name }}</a></h5>
+
       </div>
     {% endfor %}
   </div>

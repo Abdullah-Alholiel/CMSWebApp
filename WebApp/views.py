@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
 from WebApp.forms import YoutubeForm
-from .models import Module, Registration
+from .models import Module, Registration, Student
 from django.contrib.auth.models import Group
 from youtubesearchpython import VideosSearch
 
@@ -36,13 +36,13 @@ def registermod(request, module_id):
     student = request.user.student
     registration = Registration(student=student, module=module)
     registration.save()
-    return redirect('list_modules')
+    return redirect('module_detail', module_id=module_id)
 
 @login_required
 def unregister(request, registration_id):
     registration = Registration.objects.get(id=registration_id)
     registration.delete()
-    return redirect('list_modules')
+    return redirect('module_detail', module_id=registration.module.id)
 def courses(request):
     courses = Group.objects.all()
     return render(request, 'WebApp/courses.html', {'courses': courses})
@@ -79,3 +79,45 @@ def youtube(request):
         form = YoutubeForm()
     context = {'form': form}
     return render(request, "WebApp/youtube.html", context)
+
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import ModuleRegistrationForm, ModuleUnregistrationForm
+
+@login_required
+def module_detail(request, module_id):
+    module = get_object_or_404(Module, id=module_id)
+
+    # Check if the student is registered for the module
+    is_registered = Registration.objects.filter(student=request.user.student, module=module).exists()
+
+    # Handle Module Registration
+    if request.method == 'POST':
+        if 'register' in request.POST:
+            registration_form = ModuleRegistrationForm(request.POST)
+            if registration_form.is_valid():
+                registration = registration_form.save(commit=False)
+                registration.student = request.user.student
+                registration.module = module
+                registration.save()
+                return redirect('WebApp/module_detail.html', module_id=module_id)
+        elif 'unregister' in request.POST:
+            unregistration_form = ModuleUnregistrationForm(request.POST)
+            if unregistration_form.is_valid():
+                # Find the registration entry and delete it
+                registration_entry = Registration.objects.get(student=request.user.student, module=module)
+                registration_entry.delete()
+                return redirect('WebApp/module_detail.html', module_id=module_id)
+    else:
+        # Populate the forms with initial data based on whether the student is registered or not
+        registration_form = ModuleRegistrationForm(initial={'module': module})
+        unregistration_form = ModuleUnregistrationForm(initial={'module': module})
+
+    registered_students = Registration.objects.filter(module=module)
+
+    return render(request, 'WebApp/module_detail.html', {
+        'module': module,
+        'is_registered': is_registered,
+        'registration_form': registration_form,
+        'unregistration_form': unregistration_form,
+        'registered_students': registered_students,
+    })

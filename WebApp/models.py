@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User, Group
+from django.urls import reverse
 from users.models import Student
 
 class Module(models.Model):
@@ -22,6 +23,8 @@ class Module(models.Model):
 
     def __str__(self):
         return self.code + ' - ' + self.name
+    def get_absolute_url(self):
+        return reverse('itreporting:issue-detail', kwargs = {'pk': self.pk})
 
     class Meta:
         # Ensuring that the combination of name and code is unique

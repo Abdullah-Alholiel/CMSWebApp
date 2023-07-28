@@ -13,10 +13,10 @@
 
   <!-- Course List -->
 <div class="col-md-8">
-  <h3>Courses</h3>
+  <h3>List of Courses</h3>
   <ul>
     {% for Course in courses %}
-      <li><a href="#"></a>{{ Course.name }}</li>
+      <li><a href="{% url 'WebApp:list_modules' Course.id %}">{{ Course.name }}</a></li>
     {% empty %}
       <li>No courses available.</li>
     {% endfor %}
