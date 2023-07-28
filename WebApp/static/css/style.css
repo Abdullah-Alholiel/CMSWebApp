@@ -269,7 +269,7 @@ a.article-title:hover {
 # Hero Section
 --------------------------------------------------------------*/
 #hero {
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   background: url("../assets/tabs-4.jpg") top center no-repeat;
   background-size: cover;
