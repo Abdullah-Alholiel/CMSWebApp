@@ -52,3 +52,6 @@ class Registration(models.Model):
 
 #     def __str__(self):
 #         return self.name
+
+#
+# 1 =>

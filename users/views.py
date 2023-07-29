@@ -93,7 +93,9 @@ def profile(request):
     context = {
         "u_form": u_form,  
         "s_form": s_form,
-        "student": student   
+        "student": student if student else "-",
+        "course_name": student.course.name if student else "-",
     }
+    # print(student.course.name)
 
     return render(request, "users/profile.html", context)

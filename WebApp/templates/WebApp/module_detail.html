@@ -11,20 +11,19 @@
 <p>Category: {{ module.category }}</p>
 <p>Description: {{ module.description }}</p>
 
-{% if is_registered %}
+{% if is_registered and is_students %}
     <form method="post">
         {% csrf_token %}
         {{ unregistration_form }}
         <button type="submit" name="unregister">Unregister</button>
     </form>
-{% else %}
+{% elif is_students and not is_registered %}
     <form method="post">
         {% csrf_token %}
         {{ registration_form }}
         <button type="submit" name="register">Register</button>
         
     </form>
-    <a href="{% url 'WebApp:registermod' module.id %}" class="btn btn-primary">Register</a>
 {% endif %}
 
 <div class="container mt-5 mb-5">
