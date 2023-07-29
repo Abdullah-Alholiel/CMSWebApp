@@ -86,33 +86,52 @@ from .forms import ModuleRegistrationForm, ModuleUnregistrationForm
 @login_required
 def module_detail(request, module_id):
     module = get_object_or_404(Module, id=module_id)
+    student = Student.objects.filter(user_id=request.user.id).first()
+    registration_form = ModuleRegistrationForm(initial={'module': module})
+    unregistration_form = ModuleUnregistrationForm(initial={'module': module})
+    registered_students = Registration.objects.filter(module=module)
+    print(student)
+
+    if not student:
+        return render(request, 'WebApp/module_detail.html', {
+            'module': module,
+            'is_registered': False,
+            'registration_form': registration_form,
+            'unregistration_form': unregistration_form,
+            'registered_students': registered_students,
+            'is_students':False
+        })
 
     # Check if the student is registered for the module
-    is_registered = Registration.objects.filter(student=request.user.student, module=module).exists()
-
+    is_registered = Registration.objects.filter(student=student, module=module).exists()
     # Handle Module Registration
     if request.method == 'POST':
         if 'register' in request.POST:
             registration_form = ModuleRegistrationForm(request.POST)
             if registration_form.is_valid():
-                registration = registration_form.save(commit=False)
-                registration.student = request.user.student
-                registration.module = module
-                registration.save()
-                return redirect('WebApp/module_detail.html', module_id=module_id)
+                if not is_registered:
+                    registration = registration_form.save(commit=False)
+                    registration.student = student
+                    registration.module = module
+                    registration.save()
+                    is_registered=True
+
         elif 'unregister' in request.POST:
             unregistration_form = ModuleUnregistrationForm(request.POST)
             if unregistration_form.is_valid():
+                is_registered = False
                 # Find the registration entry and delete it
-                registration_entry = Registration.objects.get(student=request.user.student, module=module)
+                registration_entry = Registration.objects.filter(student=student, module=module)
                 registration_entry.delete()
-                return redirect('WebApp/module_detail.html', module_id=module_id)
-    else:
-        # Populate the forms with initial data based on whether the student is registered or not
-        registration_form = ModuleRegistrationForm(initial={'module': module})
-        unregistration_form = ModuleUnregistrationForm(initial={'module': module})
 
-    registered_students = Registration.objects.filter(module=module)
+        return render(request, 'WebApp/module_detail.html', {
+            'module': module,
+            'is_registered': is_registered,
+            'registration_form': registration_form,
+            'unregistration_form': unregistration_form,
+            'registered_students': registered_students,
+            'is_students': True
+        })
 
     return render(request, 'WebApp/module_detail.html', {
         'module': module,
@@ -120,4 +139,5 @@ def module_detail(request, module_id):
         'registration_form': registration_form,
         'unregistration_form': unregistration_form,
         'registered_students': registered_students,
+        'is_students': True
     })

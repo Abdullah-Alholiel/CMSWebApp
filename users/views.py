@@ -12,8 +12,6 @@ from users.forms import StudentRegistrationForm, LoginForm, UserUpdateForm
 from django.views.decorators.csrf import csrf_exempt
 
 # Student registration view
-
-
 @csrf_exempt  
 def register(request):
     if request.method == 'POST':
@@ -37,9 +35,6 @@ def register(request):
         form = StudentRegistrationForm()
 
     return render(request, 'users/register.html', {'form': form })
-
-
-
 
 # Home page view
 def home(request):
