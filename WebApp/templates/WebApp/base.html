@@ -41,7 +41,7 @@
                     <!-- Navbar Right Side -->  
                     <div class="navbar-nav">
                         {% if user.is_authenticated %}
-                        <a class="nav-item nav-link" href="">Report New Issue</a>
+                        <a class="nav-item nav-link" href="{% url 'WebApp:youtube'%}">Youtube Directory</a>
                             <a class="nav-item nav-link" href="{% url 'users:profile'%}">profile</a>
                             <a class="nav-item nav-link" href="{% url 'users:logout'%}">Logout</a>
                         {% else %}

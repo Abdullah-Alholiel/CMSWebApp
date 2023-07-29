@@ -30,8 +30,8 @@
     <h3>Current Weather</h3>
     <p class='text-muted'>Cities across United Kingdom</p>
     <ul class="list-group">
-      {% for weather in weather_data %}
-      <li class="list-group-item list-group-item-light">{{ weather.city }}: {{ weather.description }}, {{ weather.temperature }}&deg;C</li>
+      {% for weather_data in weather_data %}
+      <li class="list-group-item list-group-item-light">{{ weather_data.city }}: {{ weather_data.description }}, {{ weather_data.temperature }}&deg;C</li>
       {% endfor %}
     </ul>
 

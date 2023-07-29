@@ -82,7 +82,6 @@ def profile(request):
     if u_form.is_valid() and s_form.is_valid():
        student = forms.save(commit=False)
        student.course = s_form.cleaned_data["course"] 
-        
        student.save()
 
     context = {
