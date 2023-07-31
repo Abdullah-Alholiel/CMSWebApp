@@ -8,10 +8,10 @@ from youtubesearchpython import VideosSearch
 
 def home(request):
     courses = Group.objects.all()
-    return render(request, 'WebApp/home.html', {'courses': courses})
+    return render(request, 'home.html', {'courses': courses})
 
 def about_us(request):
-    return render(request, 'WebApp/about.html')
+    return render(request, 'about.html')
 
 def contact(request):
     if request.method == 'POST':
@@ -23,12 +23,12 @@ def contact(request):
         # TODO: Send email using the provided information
         return redirect('contact')
     else:
-        return render(request, 'WebApp/contact.html')
+        return render(request, 'contact.html')
 
 def list_modules(request, course_id):
     course = Group.objects.get(id=course_id)
     modules = Module.objects.filter(groups=course)
-    return render(request, 'WebApp/list_modules.html', {'modules': modules, 'course': course})
+    return render(request, 'list_modules.html', {'modules': modules, 'course': course})
 
 @login_required
 def registermod(request, module_id):
@@ -45,7 +45,7 @@ def unregister(request, registration_id):
     return redirect('module_detail', module_id=registration.module.id)
 def courses(request):
     courses = Group.objects.all()
-    return render(request, 'WebApp/courses.html', {'courses': courses})
+    return render(request, 'courses.html', {'courses': courses})
 
 def youtube(request):
     if request.method == 'POST':
@@ -74,11 +74,11 @@ def youtube(request):
             'form': form,
             'results': result_list
         }
-        return render(request, 'WebApp/youtube.html', context)
+        return render(request, 'youtube.html', context)
     else: 
         form = YoutubeForm()
     context = {'form': form}
-    return render(request, "WebApp/youtube.html", context)
+    return render(request, "youtube.html", context)
 
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import ModuleRegistrationForm, ModuleUnregistrationForm
@@ -93,7 +93,7 @@ def module_detail(request, module_id):
     print(student)
 
     if not student:
-        return render(request, 'WebApp/module_detail.html', {
+        return render(request, 'module_detail.html', {
             'module': module,
             'is_registered': False,
             'registration_form': registration_form,
@@ -124,7 +124,7 @@ def module_detail(request, module_id):
                 registration_entry = Registration.objects.filter(student=student, module=module)
                 registration_entry.delete()
 
-        return render(request, 'WebApp/module_detail.html', {
+        return render(request, 'module_detail.html', {
             'module': module,
             'is_registered': is_registered,
             'registration_form': registration_form,
@@ -133,7 +133,7 @@ def module_detail(request, module_id):
             'is_students': True
         })
 
-    return render(request, 'WebApp/module_detail.html', {
+    return render(request, 'module_detail.html', {
         'module': module,
         'is_registered': is_registered,
         'registration_form': registration_form,
