@@ -1,4 +1,5 @@
-{% extends "WebApp/base.html" %}
+{% extends "base.html" %}
+{% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
 
@@ -6,13 +7,16 @@
 
     <div class="media">
     
-        <p><img class="rounded-circle account-img" src="/Users/Abdullah/code/CMSWebApp/WebApp/static/assets/default.jpeg"></p>
+        
+        {% if student.picture  %}
+            <img class="rounded-circle account-img" src="{{student.picture.url}}" alt="profile imag">
+        {% else %}
+            <img class="rounded-circle account-img" src="{% static 'default.jpeg' %}" alt="profile image">
+        {% endif %}
         
         <div class="media-body">
         
             <h2 class="account-heading">{{student.user.username}}</h2>
-            
-            <p class="text-secondary">{{student.user}}</p>
             
             <p class="text-secondary">{{student.user.email}}</p>
             <p class="text-secondary">Course: {{student.course}}</p>
@@ -27,8 +31,7 @@
             <fieldset class="form-group">
             <legend class="border-bottom mb-4">Profile Info</legend>
             {{ u_form|crispy }}
-            {{ p_form|crispy }}
-            {{ form.course }}
+            {{ s_form|crispy }}
             </fieldset>
             <div class="form-group">
         <button class="btn btn-outline-info" type="submit">Update</button>

@@ -30,11 +30,8 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('', include('WebApp.urls')),
     path('admin/', admin.site.urls),
-    path('users/', include('users.urls', namespace='users')),
-    path('register/', user_views.register, name='register'),
+    path('users/', include('users.urls')), 
+] 
 
-
-    
-
-
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

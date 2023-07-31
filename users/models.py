@@ -12,13 +12,10 @@ class Student(models.Model):
     address = models.CharField(max_length=255)  # Address of the student
     city = models.CharField(max_length=255)  # City of the student
     country = models.CharField(max_length=255)  # Country of the student
-    photo = models.ImageField(upload_to='student_photos/', blank=True, null=True)  # Student's photo
-
-class Meta:
-        ordering =['student']
+    picture = models.ImageField(default='default.jpeg', upload_to='student_photos/')  # Student's photo
+    class Meta:
+        ordering =['user']
         # verbos_name ='Items'
-
-def __str__(self):
-        return self.user.username
-
-
+        
+    def __str__(self):
+        return f'{self.user.username} Student'
