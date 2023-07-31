@@ -1,0 +1,9 @@
+{
+ "scripts": {
+  "dev" : "npx tailwindcss -i WebApp/static/tw/tailwind.css -o WebApp/static/cssoutput.css --watch"
+ },
+
+  "devDependencies": {
+    "tailwindcss": "^3.3.3"
+  }
+}
