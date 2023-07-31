@@ -1,0 +1,62 @@
+{% extends "WebApp/base.html" %}
+
+{% block content %}
+  
+  <div class="col-md-12">
+    
+  </div>
+
+  <!-- Welcome Section -->
+  <div class="col-md-12">
+    <h3>Welcome  - Abdullah Alholaiel</h3>
+  </div>
+
+  <!-- Course List -->
+<div class="col-md-8">
+  <h3>List of Courses</h3>
+  <ul>
+    {% for Course in courses %}
+      <li><a href="{% url 'WebApp:list_modules' Course.id %}">{{ Course.name }}</a></li>
+    {% empty %}
+      <li>No courses available.</li>
+    {% endfor %}
+  </ul>
+  </div>
+{% endblock %}
+
+{% block sidebar %}
+  <!-- Sidebar for Weather Data and Other Lists -->
+  <div class="col-md-4">
+    <h3>Current Weather</h3>
+    <p class='text-muted'>Cities across United Kingdom</p>
+    <ul class="list-group">
+      {% for weather_data in weather_data %}
+      <li class="list-group-item list-group-item-light">{{ weather_data.city }}: {{ weather_data.description }}, {{ weather_data.temperature }}&deg;C</li>
+      {% endfor %}
+    </ul>
+
+    <h3>Other Information</h3>
+
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-light">Latest Issues Reported</li>
+      <li class="list-group-item list-group-item-light">IT Policies</li>
+      <li class="list-group-item list-group-item-light">IT Regulations</li>
+      <li class="list-group-item list-group-item-light">Upcoming Events</li>
+    </ul>
+  </div>
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="d-flex align-items-center">
+
+    <div class="container" data-aos="zoom-out" data-aos-delay="100">
+      <div class="row">
+        <div class="col-xl-6">
+          <h1>Bettter Education experience with SHU</h1>
+          <h2>We are team of talented tutors making student with excellence</h2>
+          <a href="#about" class="btn-get-started scrollto">Get Started</a>
+        </div>
+      </div>
+    </div>
+
+  </section><!-- End Hero -->
+{% endblock %}

@@ -1,14 +1,44 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
+
 from WebApp.forms import YoutubeForm
 from .models import Module, Registration, Student
 from django.contrib.auth.models import Group
 from youtubesearchpython import VideosSearch
+from requests import get
+import requests
 
 def home(request):
     courses = Group.objects.all()
+<<<<<<< HEAD
     return render(request, 'home.html', {'courses': courses})
+=======
+
+    api_key = 'b18758d6289ebcfc5d2a847e86d253e5'
+    url = 'https://api.openweathermap.org/data/2.5/weather?q={},{}&units=metric&appid={}'
+
+    cities = ['London', 'Sheffield', 'Liverpool', 'Manchester']
+
+    weather_data = []
+
+    for city in cities:
+        try:
+            city_weather = requests.get(url.format(city, 'UK', api_key)).json()
+            print(city_weather)  # Debugging print statement
+            weather = {
+                'city': city_weather['name'],
+                'temperature': city_weather['main']['temp'],
+                'description': city_weather['weather'][0]['description']
+            }
+            weather_data.append(weather)
+        except Exception as e:
+            print(f"Error fetching weather data for {city}: {str(e)}")
+
+    return render(request, 'WebApp/home.html', {'courses': courses, 'weather_data': weather_data})
+
+
+>>>>>>> origin/main
 
 def about_us(request):
     return render(request, 'about.html')

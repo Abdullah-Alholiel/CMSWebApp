@@ -117,6 +117,10 @@ def profile(request):
     context = {"u_form": u_form, "s_form": s_form, "student": student}
     return render(request, "users/profile.html", context)
 
+    if u_form.is_valid() and s_form.is_valid():
+       student = forms.save(commit=False)
+       student.course = s_form.cleaned_data["course"] 
+       student.save()
 
 class CustomPasswordResetView(PasswordResetView):
     form_class = CustomPasswordResetForm
