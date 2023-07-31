@@ -5,6 +5,8 @@ from WebApp.forms import YoutubeForm
 from .models import Module, Registration, Student
 from django.contrib.auth.models import Group
 from youtubesearchpython import VideosSearch
+from requests import get
+import requests
 
 # Home page view
 def home(request):
@@ -32,7 +34,6 @@ def home(request):
             print(f"Error fetching weather data for {city}: {str(e)}")
     context = {"user": user, 'courses': courses, 'weather_data': weather_data}
     return render(request, template_name, context)
-
 
 def about_us(request):
     return render(request, 'about.html')
