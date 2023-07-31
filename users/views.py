@@ -66,9 +66,6 @@ def register(request):
     return render(request, "users/register.html", {"form": form})
 
 
-# Home page view
-def home(request):
-    return render(request, "home.html")
 
 
 # Login view

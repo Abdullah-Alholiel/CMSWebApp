@@ -1,17 +1,42 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-
+import requests
 from WebApp.forms import YoutubeForm
 from .models import Module, Registration, Student
 from django.contrib.auth.models import Group
 from youtubesearchpython import VideosSearch
 
+# Home page view
 def home(request):
+    user = request.user
+    template_name = "home.html"
     courses = Group.objects.all()
-    return render(request, 'home.html', {'courses': courses})
+    api_key = 'b18758d6289ebcfc5d2a847e86d253e5'
+    url = 'https://api.openweathermap.org/data/2.5/weather?q={},{}&units=metric&appid={}'
+
+    cities = ['London', 'Sheffield', 'Liverpool', 'Manchester']
+
+    weather_data = []
+
+    for city in cities:
+        try:
+            city_weather = requests.get(url.format(city, 'UK', api_key)).json()
+            print(city_weather)  # Debugging print statement
+            weather = {
+                'city': city_weather['name'],
+                'temperature': city_weather['main']['temp'],
+                'description': city_weather['weather'][0]['description']
+            }
+            weather_data.append(weather)
+        except Exception as e:
+            print(f"Error fetching weather data for {city}: {str(e)}")
+    context = {"user": user, 'courses': courses, 'weather_data': weather_data}
+    return render(request, template_name, context)
+
 
 def about_us(request):
     return render(request, 'about.html')
+
 
 def contact(request):
     if request.method == 'POST':
@@ -25,10 +50,12 @@ def contact(request):
     else:
         return render(request, 'contact.html')
 
+
 def list_modules(request, course_id):
     course = Group.objects.get(id=course_id)
     modules = Module.objects.filter(groups=course)
     return render(request, 'list_modules.html', {'modules': modules, 'course': course})
+
 
 @login_required
 def registermod(request, module_id):
@@ -43,6 +70,8 @@ def unregister(request, registration_id):
     registration = Registration.objects.get(id=registration_id)
     registration.delete()
     return redirect('module_detail', module_id=registration.module.id)
+
+
 def courses(request):
     courses = Group.objects.all()
     return render(request, 'courses.html', {'courses': courses})
