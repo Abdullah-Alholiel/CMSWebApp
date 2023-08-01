@@ -11,10 +11,6 @@ import requests
 
 def home(request):
     courses = Group.objects.all()
-<<<<<<< HEAD
-    return render(request, 'home.html', {'courses': courses})
-=======
-
     api_key = 'b18758d6289ebcfc5d2a847e86d253e5'
     url = 'https://api.openweathermap.org/data/2.5/weather?q={},{}&units=metric&appid={}'
 
@@ -38,7 +34,9 @@ def home(request):
     return render(request, 'WebApp/home.html', {'courses': courses, 'weather_data': weather_data})
 
 
->>>>>>> origin/main
+
+
+
 
 def about_us(request):
     return render(request, 'about.html')
