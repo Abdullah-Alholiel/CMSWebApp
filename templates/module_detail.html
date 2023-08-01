@@ -1,37 +1,46 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
 
-{% block content %}
+<div class="row p-5 d-flex">
+  <!-- module_detail.html -->
+  <div class="card p-5 mb-3">
+    <h1>{{ module.name }}</h1>
+    <div class="d-flex justify-content-start mt-2">
 
+        <p><b>Code</b>: {{ module.code }}</p>
+        <p><b>Credit Points:</b> {{ module.credit }}</p>
+        <p><b>Category: </b> {{ module.category }}</p>
+        <p><b>Description:</b> {{ module.description }}</p>
+    </div>
+  </div>
 
-
-<!-- module_detail.html -->
-<h1>{{ module.name }}</h1>
-<p>Code: {{ module.code }}</p>
-<p>Credit Points: {{ module.credit }}</p>
-<p>Category: {{ module.category }}</p>
-<p>Description: {{ module.description }}</p>
-
-{% if is_registered and is_students %}
+  {% if is_registered and is_students %}
+  <div class="col-12">
     <form method="post">
-        {% csrf_token %}
-        {{ unregistration_form }}
-        <button type="submit" name="unregister">Unregister</button>
+      {% csrf_token %} {{ unregistration_form }}
+      <button type="submit" class="btn btn-danger" name="unregister">
+        Unregister
+      </button>
     </form>
-{% elif is_students and not is_registered %}
-    <form method="post">
-        {% csrf_token %}
-        {{ registration_form }}
-        <button type="submit" name="register">Register</button>
-        
-    </form>
-{% endif %}
+  </div>
 
-<div class="container mt-5 mb-5">
-<h2>Registered Students:</h2>
-<ul>
-    {% for registration in registered_students %}
-        <li>{{ registration.student.user.username }}</li>
-    {% endfor %}
-</ul>
+  {% elif is_students and not is_registered %}
+  <div class="col-12">
+    <form method="post">
+      {% csrf_token %} {{ registration_form }}
+      <button type="submit" class="btn btn-success" name="register">
+        Register
+      </button>
+    </form>
+  </div>
+  {% endif %}
+
+  <div class="mt-5 mb-5">
+    <h2>Registered Students:</h2>
+    <ul>
+      {% for registration in registered_students %}
+      <li>{{ registration.student.user.username }}</li>
+      {% endfor %}
+    </ul>
+  </div>
 </div>
 {% endblock %}

@@ -3,49 +3,50 @@
 <div class="col-md-12"></div>
 
 <!-- Welcome Section -->
-<div class="col-md-12">
-  <h3>Welcome - Abdullah Alholaiel</h3>
+<div class="col-md-10 p-5">
+  <h3>Welcome - {{user.first_name}} {{user.last_name}}</h3>
 </div>
 
-<!-- Course List -->
-<div class="col-md-8">
-  <h3>List of Courses</h3>
-  <ul>
-    {% for Course in courses %}
-    <li><a href="{% url 'list_modules' Course.id %}">{{ Course.name }}</a></li>
-    {% empty %}
-    <li>No courses available.</li>
-    {% endfor %}
-  </ul>
+<div class="row pl-5 pr-5">
+  <!-- Course List -->
+  <div class="col-md-6">
+    <h3>List of Courses</h3>
+    <ul>
+      {% for Course in courses %}
+      <li>
+        <a href="{% url 'list_modules' Course.id %}">{{ Course.name }}</a>
+      </li>
+      {% empty %}
+      <li>No courses available.</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  {% block sidebar %}
+  <!-- Sidebar for Weather Data and Other Lists -->
+  <div class="col-md-6">
+    <h3>Current Weather</h3>
+    <p class="text-muted">Cities across United Kingdom</p>
+    <ul class="list-group">
+      {% for weather in weather_data %}
+      <li class="list-group-item list-group-item-light">
+        {{ weather.city }}: {{ weather.description }}, {{ weather.temperature}}&deg;C
+      </li>
+      {% endfor %}
+    </ul>
+     <h3>Other Information</h3>
+
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-light">
+        Latest Issues Reported
+      </li>
+      <li class="list-group-item list-group-item-light">IT Policies</li>
+      <li class="list-group-item list-group-item-light">IT Regulations</li>
+      <li class="list-group-item list-group-item-light">Upcoming Events</li>
+    </ul>
+  </div>
+  {% endblock sidebar %}
 </div>
-{% endblock %} 
-
-{% block sidebar %}
-<!-- Sidebar for Weather Data and Other Lists -->
-<div class="col-md-4">
-  <h3>Current Weather</h3>
-  <p class="text-muted">Cities across United Kingdom</p>
-  <ul class="list-group">
-    {% for weather in weather_data %}
-    <li class="list-group-item list-group-item-light">
-      {{ weather.city }}: {{ weather.description }}, {{ weather.temperature
-      }}&deg;C
-    </li>
-    {% endfor %}
-  </ul>
-
-  <h3>Other Information</h3>
-
-  <ul class="list-group">
-    <li class="list-group-item list-group-item-light">
-      Latest Issues Reported
-    </li>
-    <li class="list-group-item list-group-item-light">IT Policies</li>
-    <li class="list-group-item list-group-item-light">IT Regulations</li>
-    <li class="list-group-item list-group-item-light">Upcoming Events</li>
-  </ul>
-</div>
-{% endblock %}
 
 <!-- ======= Hero Section ======= -->
 <section id="hero" class="d-flex align-items-center">
@@ -60,3 +61,4 @@
   </div>
 </section>
 <!-- End Hero -->
+{% endblock content %}
