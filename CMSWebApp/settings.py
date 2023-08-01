@@ -55,7 +55,7 @@ INSTALLED_APPS = [
     "users.apps.UsersConfig",
     "crispy_forms",
     "crispy_bootstrap4",
-    "environ"
+    "environ",
 ]
 
 MIDDLEWARE = [
@@ -147,16 +147,3 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-
-# Email configuration settings
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = env("EMAIL_HOST")
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = env("EMAIL_USER")
-EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
-DEFAULT_FROM_EMAIL = env("FROM_EMAIL")
-
-print(EMAIL_HOST_USER)
-print(EMAIL_HOST_PASSWORD)
