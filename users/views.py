@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib import messages
+from django.http import HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 
@@ -7,6 +8,8 @@ from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+
+from WebApp.models import Course, StudentGroup
 from .models import Student
 from django.contrib.auth.decorators import login_required
 from .forms import (
@@ -96,7 +99,12 @@ def logout(request):
 @login_required
 def profile(request):
     user_object = get_object_or_404(User, id=request.user.id)
-    student = Student.objects.filter(user_id=user_object.id).first()
+    if user_object.is_superuser or user_object.is_staff :
+       messages.info(request, "You are not allowed to visit here as an Administrator") 
+       return redirect('home')
+    student = Student.objects.get(user_id=user_object.pk)
+    course = Course.objects.get(student_id=student.pk) 
+    print(f'coursename {course.group.name}')
     u_form = UserUpdateForm(instance=user_object)
     s_form = StudentUpdateForm(instance=student)
 
@@ -105,26 +113,15 @@ def profile(request):
         s_form = StudentUpdateForm(request.POST, request.FILES, instance=student)
 
         if u_form.is_valid() and s_form.is_valid():
-            course = s_form.cleaned_data["course"]
             s_form.save()
             u_form.save()
     else:
         u_form = UserUpdateForm(instance=request.user)
         s_form = StudentUpdateForm(instance=student)
-    context = {"u_form": u_form, "s_form": s_form, "student": student}
+    context = {"u_form": u_form, "s_form": s_form, "student": student, "course": course}
     return render(request, "users/profile.html", context)
 
-    if u_form.is_valid() and s_form.is_valid():
-       student = forms.save(commit=False)
-       student.course = s_form.cleaned_data["course"] 
-       student.save()
-
-    context = {
-        "u_form": u_form,  
-        "s_form": s_form,
-        "student": student if student else "-",
-        "course_name": student.course.name if student else "-",
-    }
+    
     # print(student.course.name)
 class CustomPasswordResetView(PasswordResetView):
     form_class = CustomPasswordResetForm

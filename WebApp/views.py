@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 import requests
 from WebApp.forms import YoutubeForm
-from .models import Module, Registration, Student
+from .models import Module, Registration, Student, StudentGroup
 from django.contrib.auth.models import Group
 from youtubesearchpython import VideosSearch
 from requests import get
@@ -12,7 +12,7 @@ import requests
 def home(request):
     user = request.user
     template_name = "home.html"
-    courses = Group.objects.all()
+    courses = StudentGroup.objects.all()
     api_key = 'b18758d6289ebcfc5d2a847e86d253e5'
     url = 'https://api.openweathermap.org/data/2.5/weather?q={},{}&units=metric&appid={}'
 
@@ -53,8 +53,8 @@ def contact(request):
         return render(request, 'contact.html')
 
 
-def list_modules(request, course_id):
-    course = Group.objects.get(id=course_id)
+def course_list_modules(request, course_id):
+    course = StudentGroup.objects.get(id=course_id)
     modules = Module.objects.filter(groups=course)
     return render(request, 'list_modules.html', {'modules': modules, 'course': course})
 
@@ -118,8 +118,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import ModuleRegistrationForm, ModuleUnregistrationForm
 
 @login_required
-def module_detail(request, module_id):
-    module = get_object_or_404(Module, id=module_id)
+def module_detail(request, module_code):
+    module = get_object_or_404(Module, code=module_code)
     student = Student.objects.filter(user_id=request.user.id).first()
     registration_form = ModuleRegistrationForm(initial={'module': module})
     unregistration_form = ModuleUnregistrationForm(initial={'module': module})
