@@ -12,6 +12,40 @@
 
       </div>
     {% endfor %}
+    <main>
+      <div class="wrapper" data-for="article">
+        <article class="card" data-for="article".card{container-type:inline-size;}
+        @ container (min-width: 50ch) {.info{grid-column: 2;}}>
+          <img src="https://picsum.photos/300/200?random=2" alt="">
+          <div class="card__content">
+            <h2>some Module</h2>
+            <p>Module description</p>
+            <div class="card__actions">
+              <button class="button">
+                <span class="button__text">
+                  Add<span class="button__text button__text--supplementary">&nbsp;to list</span>
+                </span>
+                <span class="button__icon material-symbols-outlined">bookmark_add</span>
+              </button>
+              <button class="button">
+                <span class="button__text">
+                  Read<span class="button__text button__text--supplementary">&nbsp;now</span>
+                </span>
+                <span class="button__icon material-symbols-outlined">import_contacts</span>
+              </button>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div class="wrapper" data-for="button">
+        <button class="button">
+          <span class="button__text">
+            Add<span class="button__text button__text--supplementary">&nbsp;to list</span>
+          </span>
+          <span class="button__icon material-symbols-outlined">bookmark_add</span>
+        </button>
+      </div>
+    </main>
   </div>
 </div>
 
@@ -24,3 +58,5 @@
     <p>Make sure you've checked the module details before registering or unregistering. If you need help, please contact us.</p>
   </div>
 {% endblock %}
+
+

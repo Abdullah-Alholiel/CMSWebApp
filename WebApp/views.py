@@ -32,6 +32,7 @@ def home(request):
             weather_data.append(weather)
         except Exception as e:
             print(f"Error fetching weather data for {city}: {str(e)}")
+
     context = {"user": user, 'courses': courses, 'weather_data': weather_data}
     return render(request, template_name, context)
 

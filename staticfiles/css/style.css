@@ -1,6 +1,6 @@
 /* General settings */
 @import url("https://fonts.googleapis.com/css?family=Acme|Lobster|Patua+One|Rubik|Sniglet|Quicksand|Barlow");
-
+import .carousel
 html {
   position: relative;
   min-height: 100%;
@@ -95,6 +95,49 @@ a.article-title:hover {
 .article-metadata a:hover {
   color: #333;
   text-decoration: none;
+}
+@media (min-width: 768px) {
+  .carousel-inner .carousel-item {
+    transition: transform 0.6s ease-in-out;
+  } 
+
+  .carousel-inner .carousel-item.active,
+  .carousel-inner .carousel-item-next, 
+  .carousel-inner .carousel-item-prev {
+    display: flex;
+  }
+
+  .carousel-inner .carousel-item-right,
+  .carousel-inner .carousel-item-left { 
+    transform: translateX(0);
+  }
+
+  .carousel-inner {
+    display: flex;
+    overflow: visible;
+  }
+  
+  /* Show 3 items */
+  .carousel-inner .carousel-item.active,
+  .carousel-inner .carousel-item-next,
+  .carousel-inner .carousel-item-prev {
+    flex: 0 0 33.3333%;  /* takes up 33% width */
+  }
+}
+
+.carousel-item {
+  margin-right: 0; 
+}
+
+/* Show 2 items */
+@media (max-width: 768px) {
+
+  .carousel-inner .carousel-item.active,
+  .carousel-inner .carousel-item-next, 
+  .carousel-inner .carousel-item-prev {
+    flex: 0 0 50%;
+  }
+
 }
 
 /* Footer settings */
@@ -445,3 +488,4 @@ a.article-title:hover {
 .account-heading {
     font-size: 2.5rem;
 }
+
