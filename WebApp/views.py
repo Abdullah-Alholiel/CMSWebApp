@@ -158,11 +158,7 @@ def module_detail(request, module_id):
                 registration_entry = Registration.objects.filter(student=student, module=module)
                 registration_entry.delete()
 
-<<<<<<< HEAD
-        return render(request, 'WebApp/module_detail.html', {
-=======
         return render(request, 'module_detail.html', {
->>>>>>> main
             'module': module,
             'is_registered': is_registered,
             'registration_form': registration_form,
