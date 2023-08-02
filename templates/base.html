@@ -78,15 +78,10 @@
           </div>
         </nav>
       </header>
-      <div class="row">
-        <div class="col-md-8">{% block content %}{% endblock content %}</div>
-
-        {% block sidebar %} {% endblock sidebar %}
-      </div>
-      
     </div>
 
-    {% comment %} this is where footer is located {% endcomment %}
+    {% block content %}{% endblock content %} 
+    
     <footer id="footer">
       <div class="footer-top">
         <div class="container">
