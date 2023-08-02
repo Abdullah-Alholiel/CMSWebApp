@@ -1,4 +1,4 @@
-{% extends "WebApp/base.html" %}
+{% extends "base.html" %}
 
 {% block content %}
   
@@ -32,7 +32,7 @@
             <div class="card">
               <img class="card-img-top img-fluid" src="https://picsum.photos/seed/{{ forloop.counter }}/800/600" alt="Card image cap">
               <div class="card-body">
-                <h4 class="card-title">{{ Group.name }}</h4>
+                <h4 class="card-title">{{ Course.name }}</h4>
                 <p class="card-text">{{ Course.description }}</p>
                 <p class="card-text">Category: {{ Course. }}</p>
                 <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
