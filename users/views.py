@@ -119,6 +119,13 @@ def profile(request):
        student.course = s_form.cleaned_data["course"] 
        student.save()
 
+    context = {
+        "u_form": u_form,  
+        "s_form": s_form,
+        "student": student if student else "-",
+        "course_name": student.course.name if student else "-",
+    }
+    # print(student.course.name)
 class CustomPasswordResetView(PasswordResetView):
     form_class = CustomPasswordResetForm
     template_name = "users/password_reset_form.html"

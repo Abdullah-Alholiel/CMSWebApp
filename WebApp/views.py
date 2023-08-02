@@ -62,7 +62,10 @@ def list_modules(request, course_id):
 @login_required
 def registermod(request, module_id):
     module = Module.objects.get(id=module_id)
-    student = request.user.student
+    student = Student.objects.filter(user=request.user).first()
+    registration = Registration.objects.filter(student=student, module=module).first()
+    if registration:
+        return redirect('module_detail', module_id=module_id)
     registration = Registration(student=student, module=module)
     registration.save()
     return redirect('module_detail', module_id=module_id)
@@ -155,7 +158,11 @@ def module_detail(request, module_id):
                 registration_entry = Registration.objects.filter(student=student, module=module)
                 registration_entry.delete()
 
+<<<<<<< HEAD
+        return render(request, 'WebApp/module_detail.html', {
+=======
         return render(request, 'module_detail.html', {
+>>>>>>> main
             'module': module,
             'is_registered': is_registered,
             'registration_form': registration_form,
