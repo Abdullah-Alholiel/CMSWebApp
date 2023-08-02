@@ -1,0 +1,37 @@
+{% extends "WebApp/base.html" %}
+
+{% block content %}
+
+
+
+<!-- module_detail.html -->
+<h1>{{ module.name }}</h1>
+<p>Code: {{ module.code }}</p>
+<p>Credit Points: {{ module.credit }}</p>
+<p>Category: {{ module.category }}</p>
+<p>Description: {{ module.description }}</p>
+
+{% if is_registered and is_students %}
+    <form method="post">
+        {% csrf_token %}
+        {{ unregistration_form }}
+        <button type="submit" name="unregister">Unregister</button>
+    </form>
+{% elif is_students and not is_registered %}
+    <form method="post">
+        {% csrf_token %}
+        {{ registration_form }}
+        <button type="submit" name="register">Register</button>
+        
+    </form>
+{% endif %}
+
+<div class="container mt-5 mb-5">
+<h2>Registered Students:</h2>
+<ul>
+    {% for registration in registered_students %}
+        <li>{{ registration.student.user.username }}</li>
+    {% endfor %}
+</ul>
+</div>
+{% endblock %}
