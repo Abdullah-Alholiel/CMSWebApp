@@ -3,6 +3,13 @@ from django.contrib.auth.models import User, Group
 from django.urls import reverse
 from users.models import Student
 
+# class course(models.Model):
+#     name = models.OneToOneField(Group, on_delete=models.CASCADE, related_name='course_name')
+#     description = models.TextField()
+
+#     def __str__(self):
+#         return self.group.name
+
 class Module(models.Model):
     # Fields for Module details
     name = models.CharField(max_length=255)  # The name of the module
@@ -46,12 +53,10 @@ class Registration(models.Model):
 
 
 # class Course(models.Model):
-#     name = models.CharField(max_length=255)
+#     name = models.CharField(Group.name,max_length=255)
 #     code = models.CharField(max_length=255)
 #     description = models.TextField()
 
 #     def __str__(self):
 #         return self.name
 
-#
-# 1 =>
