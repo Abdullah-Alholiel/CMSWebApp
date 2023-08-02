@@ -21,7 +21,6 @@
       {% endfor %}
     </ul>
   </div>
-
   {% block sidebar %}
   <!-- Sidebar for Weather Data and Other Lists -->
   <div class="col-md-6">
@@ -47,7 +46,55 @@
   </div>
   {% endblock sidebar %}
 </div>
-
+<div class="container-fluid col-md-12">
+  <div
+    id="myCarousel"
+    class="carousel slide carousel-multi-item carousel-fade"
+    data-ride="carousel"
+  >
+    <div class="carousel-inner row w-100 mx-auto">
+      {% for Course in courses %}
+      <div
+        class="carousel-item col-md-4 {% if forloop.first %}active{% endif %}"
+      >
+        <div class="card">
+          <img
+            class="card-img-top img-fluid"
+            src="https://picsum.photos/seed/{{ forloop.counter }}/800/600"
+            alt="Card image cap"
+          />
+          <div class="card-body">
+            <h4 class="card-title">{{ Course.name }}</h4>
+            <p class="card-text">{{ Course.description }}</p>
+            <p class="card-text">Category: {{ Course. }}</p>
+            <p class="card-text">
+              <small class="text-muted">Last updated 3 mins ago</small>
+            </p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <a
+      class="carousel-control-prev"
+      href="#myCarousel"
+      role="button"
+      data-slide="prev"
+    >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a
+      class="carousel-control-next"
+      href="#myCarousel"
+      role="button"
+      data-slide="next"
+    >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
 <!-- ======= Hero Section ======= -->
 <section id="hero" class="d-flex align-items-center">
   <div class="container" data-aos="zoom-out" data-aos-delay="100">
