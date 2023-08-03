@@ -18,6 +18,7 @@ urlpatterns = [
 
     path('courses/', views.courses, name='courses'),
     path('youtube', views.youtube, name = 'youtube'),
+    path('book', views.book, name = 'book'),
 ]
 
 

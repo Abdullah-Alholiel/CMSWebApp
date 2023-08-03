@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 import requests
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import BookForm, ModuleRegistrationForm, ModuleUnregistrationForm
 from WebApp.forms import YoutubeForm
 from .models import Module, Registration, Student, StudentGroup
 from django.contrib.auth.models import Group
@@ -114,8 +116,48 @@ def youtube(request):
     context = {'form': form}
     return render(request, "youtube.html", context)
 
-from django.shortcuts import render, redirect, get_object_or_404
-from .forms import ModuleRegistrationForm, ModuleUnregistrationForm
+def book(request):
+    if request.method == 'POST':
+        form = BookForm(request.POST)
+        if form.is_valid():  # Ensure the form data is valid
+            text = form.cleaned_data['text']  # Use cleaned_data to get the value from the form
+            url = f"https://www.googleapis.com/books/v1/volumes?q={text}"
+            r = requests.get(url)
+            if r.status_code == 200:
+                answer = r.json()
+                result_list = []
+                for item in answer.get('items', [])[:10]:
+                    volume_info = item.get('volumeInfo', {})
+                    result_dict = {
+                        'title': volume_info.get('title'),
+                        'subtitle': volume_info.get('subtitle', ''),
+                        'description': volume_info.get('description', ''),
+                        'count': volume_info.get('pageCount', 0),
+                        'categories': volume_info.get('categories', []),
+                        'rating': volume_info.get('averageRating', 0),
+                        'thumbnail': volume_info.get('imageLinks', {}).get('thumbnail', ''),
+                        'preview': volume_info.get('previewLink', ''),
+                    }
+                    result_list.append(result_dict)
+                context = {
+                    'form': form,
+                    'results': result_list
+                }
+                return render(request, 'book.html', context)
+            else:
+                context = {
+                    'form': form,
+                    'error_message': f"Error: Unable to fetch data from the API. Status Code: {r.status_code}"
+                }
+        else:
+            context = {
+                'form': form,
+                'error_message': "Error: Invalid form data. Please provide a valid search query."
+            }
+    else: 
+        form = BookForm()
+        context = {'form': form}
+    return render(request, "book.html", context)
 
 @login_required
 def module_detail(request, module_code):
