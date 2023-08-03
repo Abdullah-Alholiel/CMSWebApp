@@ -54,7 +54,9 @@ def register(request):
                 country=form.cleaned_data["country"],
                 picture=form.cleaned_data["picture"],
             )
+            group = form.cleaned_data.pop("group", None)
             student.save()
+            Course.objects.create(group=group, student=student)
             messages.success(
                 request,
                 f"Your account has been created{user.username}! Now you can login!",
