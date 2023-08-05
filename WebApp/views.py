@@ -25,7 +25,6 @@ def home(request):
     for city in cities:
         try:
             city_weather = requests.get(url.format(city, 'UK', api_key)).json()
-            print(city_weather)  # Debugging print statement
             weather = {
                 'city': city_weather['name'],
                 'temperature': city_weather['main']['temp'],
