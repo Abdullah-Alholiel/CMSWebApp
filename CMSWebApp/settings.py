@@ -34,11 +34,13 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG_VALUE", True)
 
+#
+
 if DEBUG:
     ALLOWED_HOSTS = []
 else:
-    ALLOWED_HOST =[os.environ['WEBSITE_HOSTNAME'], 'c2091021001.azurewebsites.net']
-    CSFR_TRUSTED_ORIGINS = ['https://'+os.environ['WEBSITE_HOSTNAME'], 'c2091021001.azurewebsites.net']
+    ALLOWED_HOST =['cmswebapp-c2091021.azurewebsites.net']
+    CSFR_TRUSTED_ORIGINS = ['cmswebapp-c2091021.azurewebsites.net']
 
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
@@ -60,7 +62,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",

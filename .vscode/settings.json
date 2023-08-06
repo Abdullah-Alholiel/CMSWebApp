@@ -1,4 +1,4 @@
 {
-    "appService.defaultWebAppToDeploy": "/subscriptions/8fc122ca-79a2-4628-9c9a-69278b28526d/resourceGroups/dtl-22-55-708564-af-c2091021-573928/providers/Microsoft.Web/sites/c2091021001",
+    "appService.defaultWebAppToDeploy": "/subscriptions/8fc122ca-79a2-4628-9c9a-69278b28526d/resourceGroups/dtl-22-55-708564-af-c2091021-573928/providers/Microsoft.Web/sites/CMSWebApp-c2091021",
     "appService.deploySubpath": "."
 }
