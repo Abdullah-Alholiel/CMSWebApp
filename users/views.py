@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
+from WebApp.models import StudentGroup
 
 # Create your views here.
 from django.shortcuts import render, redirect
@@ -10,6 +11,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
 from WebApp.models import Course, StudentGroup
+import users
 from .models import Student
 from django.contrib.auth.decorators import login_required
 from .forms import (
@@ -104,9 +106,15 @@ def profile(request):
     if user_object.is_superuser or user_object.is_staff :
        messages.info(request, "You are not allowed to visit here as an Administrator") 
        return redirect('home')
-    student = Student.objects.get(user_id=user_object.pk)
-    course = Course.objects.get(student_id=student.pk) 
-    print(f'coursename {course.group.name}')
+    student = users.models.Student.objects.get(user_id=user_object.pk)
+    course = Student.objects.get(user_id=student.pk) 
+    # Check if the student has an associated course
+    if hasattr(student, 'course'):
+        # Get the associated StudentGroup's name
+        course_name =  StudentGroup.objects
+        print(f'coursename: {course_name}')
+    else:
+        print("Student has no course.")
     u_form = UserUpdateForm(instance=user_object)
     s_form = StudentUpdateForm(instance=student)
 

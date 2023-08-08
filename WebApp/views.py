@@ -4,7 +4,7 @@ import requests
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import BookForm, ModuleRegistrationForm, ModuleUnregistrationForm
 from WebApp.forms import YoutubeForm
-from .models import Module, Registration, Student, StudentGroup
+from .models import Module, Registration, StudentGroup
 from django.contrib.auth.models import Group
 from youtubesearchpython import VideosSearch
 from requests import get
