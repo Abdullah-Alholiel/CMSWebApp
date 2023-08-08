@@ -1,3 +1,4 @@
+from django.conf import settings
 from storages.backends.azure_storage import AzureStorage
 from .settings import AZURE_SA_NAME, AZURE_SA_KEY
 class AzureMediaStorage(AzureStorage):
