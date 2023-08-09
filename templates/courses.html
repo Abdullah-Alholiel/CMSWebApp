@@ -4,10 +4,9 @@
 <div class="col-md-8">
   <h3>Courses</h3>
   <div class="list-group">
-    {% for course in courses %}
+    {% for module in modules %}
       <div class="list-group-item">
-        <h5>{{ course.name }}</h5>
-        <a href="{% url 'course_list_modules' course.id %}" class="btn btn-primary">View Modules</a>
+        <a href="{% url 'module_detail' module.code %}" class="btn btn-primary">{{ module.name }}</a>
       </div>
     {% endfor %}
   </div>

@@ -4,7 +4,7 @@ import requests
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import BookForm, ModuleRegistrationForm, ModuleUnregistrationForm
 from WebApp.forms import YoutubeForm
-from .models import Module, Registration, Student, StudentGroup
+from .models import Course, Module, Registration, Student, StudentGroup
 from django.contrib.auth.models import Group
 from youtubesearchpython import VideosSearch
 from requests import get
@@ -80,8 +80,11 @@ def unregister(request, registration_id):
 
 
 def courses(request):
-    courses = Group.objects.all()
-    return render(request, 'courses.html', {'courses': courses})
+    student = Student.objects.filter(user = request.user).first()
+    course = Course.objects.filter(student=student).first()
+    modules = Module.objects.filter(groups = course.group)
+    return render(request, 'courses.html', {'modules': modules})
+
 
 def youtube(request):
     if request.method == 'POST':

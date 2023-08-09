@@ -64,7 +64,7 @@
                 <a class="nav-item nav-link" href="{% url 'profile'%}"
                 >profile</a>
                 <a class="nav-item nav-link" href="{% url 'logout'%}">Logout</a>
-                <a class="nav-item nav-link" href="{% url 'youtube' %}">Youtube API</a>
+                {% comment %} <a class="nav-item nav-link" href="{% url 'youtube' %}">Youtube API</a> {% endcomment %}
                 <a class="nav-item nav-link" href="{% url 'book' %}">Book API</a>
                 {% else %}
                 <a class="nav-item nav-link" href="{% url 'login'%}">Login</a>
