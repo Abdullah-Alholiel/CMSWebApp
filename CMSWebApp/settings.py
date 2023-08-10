@@ -96,9 +96,13 @@ WSGI_APPLICATION = "CMSWebApp.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',  
+        'NAME': os.environ['AZURE_DB_NAME'],  
+        'USER': os.environ['AZURE_DB_USER'],  
+        'PASSWORD': os.environ['AZURE_DB_PASSWORD'],  
+        'HOST': os.environ['AZURE_DB_HOST'],  
+        'PORT': os.environ['AZURE_DB_PORT']
     }
 }
 
@@ -142,13 +146,14 @@ STATIC_URL = "static/css/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 AZURE_SA_NAME = os.environ['AZURE_SA_NAME']
 AZURE_SA_KEY = os.environ['AZURE_SA_KEY']
 
 DEFAULT_FILE_STORAGE = 'storages.AzureMediaStorage'
 # STATICFILES_STORAGE = 'WebApp.storages.AzureStaticStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STATIC_URL = f'https://{AZURE_SA_NAME}.blob.core.windows.net/static/static/'
 Media_URL = f'https://{AZURE_SA_KEY}.blob.core.windows.net/media/'
