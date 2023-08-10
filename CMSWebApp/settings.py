@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     "crispy_forms",
     "crispy_bootstrap4",
     "environ",
-    "WebApp.storages" ,
+    "storages" ,
 ]
 
 MIDDLEWARE = [
@@ -147,7 +147,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 AZURE_SA_NAME = os.environ['AZURE_SA_NAME']
 AZURE_SA_KEY = os.environ['AZURE_SA_KEY']
 
-DEFAULT_FILE_STORAGE = 'CMSWebApp.storages.AzureMediaStorage'
+DEFAULT_FILE_STORAGE = 'storages.AzureMediaStorage'
 # STATICFILES_STORAGE = 'WebApp.storages.AzureStaticStorage'
 
 STATIC_URL = f'https://{AZURE_SA_NAME}.blob.core.windows.net/static/static/'
