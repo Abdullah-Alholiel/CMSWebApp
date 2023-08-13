@@ -34,10 +34,10 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG= True
 
 if DEBUG:
-    ALLOWED_HOST = ["localhost","127.0.0.1","https://cmswebapp-c2091021.azurewebsites.net","cmswebapp-c2091021.azurewebsites.net"]
+    ALLOWED_HOST = ["localhost","127.0.0.1","https://cmswepapp-c2091021.azurewebsites.net","cmswepapp-c2091021.azurewebsites.net"]
 else:
-    ALLOWED_HOST = ["https://cmswebapp-c2091021.azurewebsites.net","cmswebapp-c2091021.azurewebsites.net"]
-    CSFR_TRUSTED_ORIGINS = ["https://cmswebapp-c2091021.azurewebsites.net"]
+    ALLOWED_HOST = ["https://cmswepapp-c2091021.azurewebsites.net","cmswepapp-c2091021.azurewebsites.net"]
+    CSFR_TRUSTED_ORIGINS = ["https://cmswepapp-c2091021.azurewebsites.net"]
 
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
