@@ -32,14 +32,16 @@ ADMINS = [("c2091021", "c2091021@hallam.shu")]
 SECRET_KEY = os.environ.get("SECRET_KEY", 'dec7ea304071a1f3f985f1366df9ce5cb29b26ab2310157d3043e90ca68e4e8c')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG_VALUE", True)
+# DEBUG = os.environ.get("DEBUG_VALUE", True)
+WEBSITE_HOSTNAME = os.environ.get('WEBSITE_HOSTNAME', None)
 
+DEBUG = WEBSITE_HOSTNAME == None
 if DEBUG:
 
     ALLOWED_HOSTS = []
 else:
-    ALLOWED_HOSTS = ['WEBSITE_HOSTNAME']
-    CSRF_TRUSTED_ORIGINS = [f'https://'+os.environ['WEBSITE_HOSTNAME']]
+    ALLOWED_HOSTS = [WEBSITE_HOSTNAME]
+    CSRF_TRUSTED_ORIGINS = [f"https://{WEBSITE_HOSTNAME}"]
 
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
@@ -56,8 +58,7 @@ INSTALLED_APPS = [
     "users.apps.UsersConfig",
     "crispy_forms",
     "crispy_bootstrap4",
-    "environ",
-    'storages'
+    "storages",
 ]
 
 MIDDLEWARE = [
@@ -141,16 +142,34 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "static/"
-MEDIA_URL = "/media/"
+AZURE_SA_NAME = os.environ['AZURE_SA_NAME']
+AZURE_SA_KEY = os.environ['AZURE_SA_KEY']
 
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+if DEBUG:  
+    
+    STATIC_URL = "static/"
+    MEDIA_URL = "/media/"
+    # MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+    STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+    STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+else :
+    MEDIA_URL = (
 
-DEFAULT_FILE_STORAGE = 'storages.AzureMediaStorage'
-# STATICFILES_STORAGE = 'WebApp.storages.AzureStaticStorage'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+            f"https://{os.environ.get('AZURE_SA_NAME')}.blob.core.windows.net/media/"
+
+        )
+
+    STATIC_URL = (
+
+        f"https://{os.environ.get('AZURE_SA_NAME')}.blob.core.windows.net/static/"
+
+    )
+
+    
+
+    DEFAULT_FILE_STORAGE = 'CMSWebApp.storages.AzureMediaStorage'
+    STATICFILES_STORAGE = 'CMSWebApp.storages.AzureStaticStorage'
+    # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # Default primary key field type
