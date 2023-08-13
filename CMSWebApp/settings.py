@@ -30,10 +30,11 @@ ADMINS = [("c2091021", "c2091021@hallam.shu")]
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = 'WEBSITE_HOSTNAME' not in os.environ
+# DEBUG = 'WEBSITE_HOSTNAME' not in os.environ
+DEBUG= True
 
 if DEBUG:
-    ALLOWED_HOSTS = []
+    ALLOWED_HOST = ["localhost","127.0.0.1","https://cmswebapp-c2091021.azurewebsites.net","cmswebapp-c2091021.azurewebsites.net"]
 else:
     ALLOWED_HOST = ["https://cmswebapp-c2091021.azurewebsites.net","cmswebapp-c2091021.azurewebsites.net"]
     CSFR_TRUSTED_ORIGINS = ["https://cmswebapp-c2091021.azurewebsites.net"]
