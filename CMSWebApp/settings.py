@@ -31,12 +31,12 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = 'WEBSITE_HOSTNAME' not in os.environ
-DEBUG= True
+DEBUG= False
 
 if DEBUG:
-    ALLOWED_HOST = ["localhost","127.0.0.1","https://cmswepapp-c2091021.azurewebsites.net","cmswepapp-c2091021.azurewebsites.net"]
+    ALLOWED_HOSTS = ["localhost","127.0.0.1","https://cmswepapp-c2091021.azurewebsites.net","cmswepapp-c2091021.azurewebsites.net"]
 else:
-    ALLOWED_HOST = ["https://cmswepapp-c2091021.azurewebsites.net","cmswepapp-c2091021.azurewebsites.net"]
+    ALLOWED_HOSTS = ["https://cmswepapp-c2091021.azurewebsites.net","cmswepapp-c2091021.azurewebsites.net"]
     CSFR_TRUSTED_ORIGINS = ["https://cmswepapp-c2091021.azurewebsites.net"]
 
 
