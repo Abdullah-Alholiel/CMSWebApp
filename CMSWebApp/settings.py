@@ -35,7 +35,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY", 'dec7ea304071a1f3f985f1366df9ce5cb29b2
 # DEBUG = os.environ.get("DEBUG_VALUE", True)
 WEBSITE_HOSTNAME = os.environ.get('WEBSITE_HOSTNAME', None)
 
-DEBUG = WEBSITE_HOSTNAME == None
+DEBUG = WEBSITE_HOSTNAME != True
 if DEBUG:
 
     ALLOWED_HOSTS = []
@@ -100,14 +100,14 @@ WSGI_APPLICATION = "CMSWebApp.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',  
-        'NAME': os.environ['AZURE_DB_NAME'],  
+        'NAME': 'production',  
         'USER': os.environ['AZURE_DB_USER'],   
         'HOST': os.environ['AZURE_DB_HOST'],  
         'PORT': os.environ['AZURE_DB_PORT'],
         'PASSWORD': os.environ['AZURE_DB_PASSWORD'],
     }
 }
-
+print(DATABASES)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
