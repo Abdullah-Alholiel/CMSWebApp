@@ -36,12 +36,13 @@ SECRET_KEY = os.environ.get("SECRET_KEY", 'dec7ea304071a1f3f985f1366df9ce5cb29b2
 WEBSITE_HOSTNAME = os.environ.get('WEBSITE_HOSTNAME', None)
 
 DEBUG = WEBSITE_HOSTNAME == None
+
 if DEBUG:
 
     ALLOWED_HOSTS = []
 else:
-    ALLOWED_HOSTS = ["https://cmswebapp-c2091021001.azurewebsites.net", "cmswebapp-c2091021001.azurewebsites.net"]
-    CSRF_TRUSTED_ORIGINS = ["https://cmswebapp-c2091021001.azurewebsites.net"]
+    ALLOWED_HOSTS = ["https://cmswebapp-c2091021.azurewebsites.net", "cmswebapp-c2091021.azurewebsites.net"]
+    CSRF_TRUSTED_ORIGINS = ["https://cmswebapp-c2091021.azurewebsites.net"]
 
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
@@ -100,14 +101,13 @@ WSGI_APPLICATION = "CMSWebApp.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',  
+        'HOST': "cmswebapp-db-group2.mysql.database.azure.com",  
         'NAME': 'production',  
-        'USER': os.environ['AZURE_DB_USER'],   
-        'HOST': os.environ['AZURE_DB_HOST'],  
-        'PORT': os.environ['AZURE_DB_PORT'],
-        'PASSWORD': os.environ['AZURE_DB_PASSWORD'],
+        'USER': "c2091021",   
+        'PORT': '3306',
+        'PASSWORD': 'Sheffield@66',
     }
 }
-print(DATABASES)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -146,7 +146,6 @@ AZURE_SA_NAME = os.environ['AZURE_SA_NAME']
 AZURE_SA_KEY = os.environ['AZURE_SA_KEY']
 
 if DEBUG:  
-    
     STATIC_URL = "static/"
     MEDIA_URL = "/media/"
     # MEDIA_ROOT = os.path.join(BASE_DIR, "media")
@@ -154,7 +153,6 @@ if DEBUG:
     STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
     
 else:
-    
     MEDIA_URL = (
 
             f"https://{os.environ.get('AZURE_SA_NAME')}.blob.core.windows.net/media/"
@@ -169,8 +167,8 @@ else:
 
     
 
-    DEFAULT_FILE_STORAGE = 'CMSWebApp.storages.AzureMediaStorage'
-    STATICFILES_STORAGE = 'CMSWebApp.storages.AzureStaticStorage'
+    DEFAULT_FILE_STORAGE = 'storages.AzureMediaStorage'
+    STATICFILES_STORAGE = 'storages.AzureStaticStorage'
     # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
