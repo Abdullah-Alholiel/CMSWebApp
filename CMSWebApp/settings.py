@@ -12,13 +12,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
-import environ
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-env = environ.Env()
-environ.Env.read_env()
+load_dotenv(BASE_DIR/ ".env")
 
 LOGIN_REDIRECT_URL = "profile"
 
@@ -32,13 +30,13 @@ ADMINS = [("c2091021", "c2091021@hallam.shu")]
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG_VALUE", True)
+DEBUG = 'WEBSITE_HOSTNAME' not in os.environ
 
 if DEBUG:
-    ALLOWED_HOSTS = ["*"]
+    ALLOWED_HOSTS = []
 else:
-    ALLOWED_HOST = ["https://website.com"]
-    CSFR_TRUSTED_ORIGINS = ["https://website.com"]
+    ALLOWED_HOST = ["https://cmswebapp-c2091021.azurewebsites.net","cmswebapp-c2091021.azurewebsites.net"]
+    CSFR_TRUSTED_ORIGINS = ["https://cmswebapp-c2091021.azurewebsites.net"]
 
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
@@ -55,11 +53,12 @@ INSTALLED_APPS = [
     "users.apps.UsersConfig",
     "crispy_forms",
     "crispy_bootstrap4",
-    "environ",
+    "storages"
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -93,12 +92,24 @@ WSGI_APPLICATION = "CMSWebApp.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+if DEBUG:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
     }
-}
+else:
+    DATABASES = {         
+    "default": {             
+        "ENGINE": "django.db.backends.mysql",            
+        "NAME": os.environ.get("AZURE_DB_NAME"),          
+        "HOST": os.environ.get("AZURE_DB_HOST"),             
+        "PORT": os.environ.get("AZURE_DB_PORT"),             
+        "USER": os.environ.get("AZURE_DB_USER"),             
+        "PASSWORD": os.environ.get("AZURE_DB_PASSWORD"),  }  }
+
+
 
 
 # Password validation
@@ -133,13 +144,23 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
+if DEBUG:     
+    STATIC_URL = "static/"     
+    MEDIA_ROOT = BASE_DIR / "media"     
+    MEDIA_URL = "/media/" 
+    MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+    STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+    STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+else:     
+    MEDIA_URL = f"https://{os.environ.get('AZURE_SA_NAME')}.blob.core.windows.net/media/"
+    STATIC_URL = f"https://{os.environ.get('AZURE_SA_NAME')}.blob.core.windows.net/static/"
+    DEFAULT_FILE_STORAGE = "CMSWebApp.storages.AzureMediaStorage"
+    STATICFILES_STORAGE = "CMSWebApp.storages.AzureStaticStorage"
+    AZURE_SA_NAME = os.environ.get("AZURE_SA_NAME")     
+    AZURE_SA_KEY = os.environ.get("AZURE_SA_KEY")    
+    STATIC_ROOT = BASE_DIR / "staticfiles"    
+    MEDIA_ROOT = BASE_DIR / "mediafiles"
 
-STATIC_URL = "static/"
-MEDIA_URL = "/media/"
-
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 
 # Default primary key field type
