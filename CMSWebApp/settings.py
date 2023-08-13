@@ -29,16 +29,17 @@ ADMINS = [("c2091021", "c2091021@hallam.shu")]
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY", 'dec7ea304071a1f3f985f1366df9ce5cb29b26ab2310157d3043e90ca68e4e8c')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG_VALUE", True)
 
 if DEBUG:
-    ALLOWED_HOSTS = ["*"]
+
+    ALLOWED_HOSTS = []
 else:
-    ALLOWED_HOST = ["https://website.com"]
-    CSFR_TRUSTED_ORIGINS = ["https://website.com"]
+    ALLOWED_HOSTS = ['WEBSITE_HOSTNAME']
+    CSRF_TRUSTED_ORIGINS = [f'https://'+os.environ['WEBSITE_HOSTNAME']]
 
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
@@ -94,9 +95,13 @@ WSGI_APPLICATION = "CMSWebApp.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',  
+        'NAME': os.environ['AZURE_DB_NAME'],  
+        'USER': os.environ['AZURE_DB_USER'],   
+        'HOST': os.environ['AZURE_DB_HOST'],  
+        'PORT': os.environ['AZURE_DB_PORT'],
+        'PASSWORD': os.environ['AZURE_DB_PASSWORD'],
     }
 }
 
