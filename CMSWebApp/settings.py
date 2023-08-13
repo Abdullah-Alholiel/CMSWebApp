@@ -35,13 +35,13 @@ SECRET_KEY = os.environ.get("SECRET_KEY", 'dec7ea304071a1f3f985f1366df9ce5cb29b2
 # DEBUG = os.environ.get("DEBUG_VALUE", True)
 WEBSITE_HOSTNAME = os.environ.get('WEBSITE_HOSTNAME', None)
 
-DEBUG = WEBSITE_HOSTNAME != True
+DEBUG = WEBSITE_HOSTNAME == None
 if DEBUG:
 
     ALLOWED_HOSTS = []
 else:
-    ALLOWED_HOSTS = [WEBSITE_HOSTNAME]
-    CSRF_TRUSTED_ORIGINS = [f"https://{WEBSITE_HOSTNAME}"]
+    ALLOWED_HOSTS = ["https://cmswebapp-c2091021001.azurewebsites.net", "cmswebapp-c2091021001.azurewebsites.net"]
+    CSRF_TRUSTED_ORIGINS = ["https://cmswebapp-c2091021001.azurewebsites.net"]
 
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
@@ -152,7 +152,9 @@ if DEBUG:
     # MEDIA_ROOT = os.path.join(BASE_DIR, "media")
     STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
     STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-else :
+    
+else:
+    
     MEDIA_URL = (
 
             f"https://{os.environ.get('AZURE_SA_NAME')}.blob.core.windows.net/media/"
