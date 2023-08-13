@@ -17,8 +17,7 @@ import environ
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-env = environ.Env()
-environ.Env.read_env()
+
 
 LOGIN_REDIRECT_URL = "profile"
 
@@ -102,7 +101,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',  
         'HOST': "cmswebapp-db-group2.mysql.database.azure.com",  
-        'NAME': 'production',  
+        'NAME': 'productions',  
         'USER': "c2091021",   
         'PORT': '3306',
         'PASSWORD': 'Sheffield@66',
