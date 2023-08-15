@@ -45,13 +45,13 @@ class Registration(models.Model):
     def __str__(self):
         return f'{self.student.user.get_full_name()} {self.module.name}'
 
+
 class Course(models.Model):
-    group = models.ForeignKey(StudentGroup, on_delete=models.DO_NOTHING)
     student = models.OneToOneField(Student, on_delete=models.DO_NOTHING)
+    group = models.ForeignKey(StudentGroup, on_delete=models.DO_NOTHING)
    
     def __str__(self):
         return f'{self.group.name} {self.student.user.get_full_name()}'
 
     def get_absolute_url(self):
         return reverse("course_detail", kwargs={"pk": self.pk})
-    

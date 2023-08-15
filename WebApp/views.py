@@ -82,7 +82,8 @@ def unregister(request, registration_id):
 def courses(request):
     student = Student.objects.filter(user = request.user).first()
     course = Course.objects.filter(student=student).first()
-    modules = Module.objects.filter(groups = course.group)
+    modules = course.group.modules.all()
+   # import pdb; pdb.set_trace()
     return render(request, 'courses.html', {'modules': modules})
 
 
