@@ -336,7 +336,7 @@ a.article-title:hover {
 #hero {
   width: 100vw;
   height: 100vh;
-  background: url("../assets/tabs-4.jpg") top center no-repeat;
+  background: url("https://cmswebapp2091021.blob.core.windows.net/media/student_photos/tabs-4.jpg") top center no-repeat;
   background-size: cover;
   position: relative;
   padding-top: 82px;
