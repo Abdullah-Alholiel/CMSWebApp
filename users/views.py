@@ -95,7 +95,8 @@ def login(request, form):
 # Logout view
 def logout(request):
     logout(request)
-    return redirect(request, "home.html")
+    courses = StudentGroup.objects.all()
+    return redirect(request, "home.html", {"courses": courses})
 
 
 @login_required
@@ -106,6 +107,7 @@ def profile(request):
        return redirect('home')
     student = Student.objects.get(user_id=user_object.pk)
     course = Course.objects.get(student_id=student.pk) 
+    courses = StudentGroup.objects.all()
     print(f'coursename {course.group.name}')
     u_form = UserUpdateForm(instance=user_object)
     s_form = StudentUpdateForm(instance=student)
@@ -120,7 +122,7 @@ def profile(request):
     else:
         u_form = UserUpdateForm(instance=request.user)
         s_form = StudentUpdateForm(instance=student)
-    context = {"u_form": u_form, "s_form": s_form, "student": student, "course": course}
+    context = {"u_form": u_form, "s_form": s_form, "student": student, "course": course,"courses":courses}
     return render(request, "users/profile.html", context)
 
     

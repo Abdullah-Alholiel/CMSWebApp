@@ -1,25 +1,35 @@
 {% extends "base.html" %} {% load crispy_forms_tags %} {% block content %}
 
-<div class="content-section">
-  <form method="POST">
-    {% csrf_token %}
-    <fieldset class="form-group">
-      <legend class="border-bottom mb-4">Student IT services - Login</legend>
-      {{ form|crispy }}
-    </fieldset>
-    <div class="form-group">
-      <button class="btn btn-outline-info" type="submit">Login</button>
-      <a href="{% url 'custom_password_reset' %}">Reset Password</a>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="mb-0">Student CMS - Login</h4>
+        </div>
+        <div class="card-body">
+          <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+		 {{ form|crispy }}
+            </div>
+            
+            <button class="btn btn-primary btn-block" type="submit">Login</button>
+          </form>
+          <div class="mt-3">
+            <a href="{% url 'custom_password_reset' %}" class="btn btn-link">Reset Password</a>
+          </div>
+        </div>
+      </div>
     </div>
-  </form>
+  </div>
 </div>
 
-<div class="border-top pt-3">
-  <small class="text-muted">
-    You need to create an account?<a class="ml-2" href="{% url 'register' %}"
-      >Register</a
-    >
-  </small>
+<div class="border-top pt-3 mt-3 text-center">
+  <p class="mb-0">
+    You need to create an account? <a href="{% url 'register' %}" class="btn btn-link">Register</a>
+  </p>
 </div>
+
 
 {% endblock content %}

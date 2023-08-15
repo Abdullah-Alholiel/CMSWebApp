@@ -39,7 +39,9 @@ def home(request):
     return render(request, template_name, context)
 
 def about_us(request):
-    return render(request, 'about.html')
+    courses = StudentGroup.objects.all()
+      
+    return render(request, 'about.html', {'courses': courses})
 
 
 def contact(request):
@@ -52,13 +54,15 @@ def contact(request):
         # TODO: Send email using the provided information
         return redirect('contact')
     else:
-        return render(request, 'contact.html')
+        courses = StudentGroup.objects.all()
+        return render(request, 'contact.html', {'courses': courses})
 
 
 def course_list_modules(request, course_id):
     course = StudentGroup.objects.get(id=course_id)
     modules = Module.objects.filter(groups=course)
-    return render(request, 'list_modules.html', {'modules': modules, 'course': course})
+    courses = StudentGroup.objects.all()
+    return render(request, 'list_modules.html', {'modules': modules, 'course': course, 'courses': courses})
 
 
 @login_required
@@ -83,8 +87,9 @@ def courses(request):
     student = Student.objects.filter(user = request.user).first()
     course = Course.objects.filter(student=student).first()
     modules = course.group.modules.all()
+    courses = StudentGroup.objects.all()
    # import pdb; pdb.set_trace()
-    return render(request, 'courses.html', {'modules': modules})
+    return render(request, 'courses.html', {'modules': modules, 'courses': courses})
 
 
 def youtube(request):
@@ -116,8 +121,9 @@ def youtube(request):
         }
         return render(request, 'youtube.html', context)
     else: 
+        courses = StudentGroup.objects.all()
         form = YoutubeForm()
-    context = {'form': form}
+    context = {'form': form, 'courses': courses}
     return render(request, "youtube.html", context)
 
 def book(request):
@@ -159,11 +165,12 @@ def book(request):
                 'error_message': "Error: Invalid form data. Please provide a valid search query."
             }
     else: 
+        courses = StudentGroup.objects.all()
         form = BookForm()
-        context = {'form': form}
+        context = {'form': form, 'courses': courses}
     return render(request, "book.html", context)
 
-@login_required
+
 def module_detail(request, module_code):
     module = get_object_or_404(Module, code=module_code)
     student = Student.objects.filter(user_id=request.user.id).first()

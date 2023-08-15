@@ -1,46 +1,50 @@
 {% extends "base.html" %} {% block content %}
 
-<div class="row p-5 d-flex">
-  <!-- module_detail.html -->
-  <div class="card p-5 mb-3">
-    <h1>{{ module.name }}</h1>
-    <div class="d-flex justify-content-start mt-2">
+<div class="container mt-5">
+  <div class="row">
+    <!-- module_detail.html -->
+    <div class="col-lg-8 mx-auto">
+      <div class="card p-5 mb-4">
+        <h1 class="mb-4">{{ module.name }}</h1>
+        <div class="d-flex justify-content-start">
+          <div class="mr-4">
+            <p class="mb-1"><strong>Code:</strong> {{ module.code }}</p>
+            <p class="mb-1"><strong>Credit Points:</strong> {{ module.credit }}</p>
+          </div>
+          <div>
+            <p class="mb-1"><strong>Category:</strong> {{ module.category }}</p>
+            <p class="mb-1"><strong>Description:</strong> {{ module.description }}</p>
+          </div>
+        </div>
+      </div>
 
-        <p><b>Code</b>: {{ module.code }}</p>
-        <p><b>Credit Points:</b> {{ module.credit }}</p>
-        <p><b>Category: </b> {{ module.category }}</p>
-        <p><b>Description:</b> {{ module.description }}</p>
+      {% if is_registered and is_students %}
+      <form method="post">
+        {% csrf_token %} {{ unregistration_form }}
+        <button type="submit" class="btn btn-danger" name="unregister">
+          Unregister
+        </button>
+      </form>
+      {% elif is_students and not is_registered %}
+      <form method="post">
+        {% csrf_token %} {{ registration_form }}
+        <button type="submit" class="btn btn-success" name="register">
+          Register
+        </button>
+      </form>
+      {% endif %}
+
+      <div class="mt-5 mb-5">
+        <h2>Registered Students:</h2>
+        <ul class="list-unstyled">
+          {% for registration in registered_students %}
+          <li>{{ registration.student.user.username }}</li>
+          {% endfor %}
+        </ul>
+      </div>
     </div>
   </div>
-
-  {% if is_registered and is_students %}
-  <div class="col-12">
-    <form method="post">
-      {% csrf_token %} {{ unregistration_form }}
-      <button type="submit" class="btn btn-danger" name="unregister">
-        Unregister
-      </button>
-    </form>
-  </div>
-
-  {% elif is_students and not is_registered %}
-  <div class="col-12">
-    <form method="post">
-      {% csrf_token %} {{ registration_form }}
-      <button type="submit" class="btn btn-success" name="register">
-        Register
-      </button>
-    </form>
-  </div>
-  {% endif %}
-
-  <div class="mt-5 mb-5">
-    <h2>Registered Students:</h2>
-    <ul>
-      {% for registration in registered_students %}
-      <li>{{ registration.student.user.username }}</li>
-      {% endfor %}
-    </ul>
-  </div>
 </div>
+
+
 {% endblock %}

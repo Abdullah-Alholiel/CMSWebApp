@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="col-md-8">
-  <h3>Courses</h3>
+<div class="col-md-8 m-2">
+  <h3>Modules</h3>
   <div class="list-group">
     {% for module in modules %}
-      <div class="list-group-item">
+      <div class="list-group-item mb-2">
         <a href="{% url 'module_detail' module.code %}" class="btn btn-primary">{{ module.name }}</a>
       </div>
     {% endfor %}

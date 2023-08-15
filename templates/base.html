@@ -21,7 +21,7 @@
       type="text/css"
       href="{% static  './css/style.css' %}"
     />
-    <title>Student IT Services - {{title}}</title>
+    <title>Student CMS- {{title}}</title>
   </head>
 
   <body>
@@ -34,7 +34,7 @@
         <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
           <div class="container">
             <a class="navbar-brand mr-4" href="{% url 'home' %}"
-              >Student IT Services</a
+              >Student CMS</a
             >
             <button
               class="navbar-toggler"
@@ -51,9 +51,7 @@
               <div class="navbar-nav mr-auto">
                 <a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
                 <a class="nav-item nav-link" href="{% url 'about' %}">About</a>
-                <a class="nav-item nav-link" href="{% url 'courses' %}"
-                  >Course Modules</a
-                >
+                
                 <a class="nav-item nav-link" href="{% url 'contact' %}"
                   >Contact Us</a
                 >
@@ -61,10 +59,13 @@
               <!-- Navbar Right Side -->
               <div class="navbar-nav">
                 {% if user.is_authenticated %}
+                <a class="nav-item nav-link" href="{% url 'courses' %}"
+                  >Course Modules</a
+                >
                 <a class="nav-item nav-link" href="{% url 'profile'%}"
                 >profile</a>
                 <a class="nav-item nav-link" href="{% url 'logout'%}">Logout</a>
-                {% comment %} <a class="nav-item nav-link" href="{% url 'youtube' %}">Youtube API</a> {% endcomment %}
+                <a class="nav-item nav-link" href="{% url 'youtube' %}">Youtube API</a>
                 <a class="nav-item nav-link" href="{% url 'book' %}">Book API</a>
                 {% else %}
                 <a class="nav-item nav-link" href="{% url 'login'%}">Login</a>
@@ -82,95 +83,89 @@
 
     {% block content %}{% endblock content %} 
     
-    <footer id="footer">
-      <div class="footer-top">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-3 col-md-6 footer-contact">
-              <h3>School Details<span>.</span></h3>
-              <p>
-                Arundel Street <br />
-                Sheffield, South Yorkshire<br />
-                United KIngdom <br /><br />
-                <strong>Phone:</strong> +44 454646 575<br />
-                <strong>Email:</strong> students@shu.com<br />
-              </p>
-            </div>
-
-            <div class="col-lg-2 col-md-6 footer-links">
-              <h4>Useful Links</h4>
+   <!-- Footer -->
+   <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h3>School Details<span>.</span></h3>
+            <p>
+              Arundel Street <br />
+              Sheffield, South Yorkshire<br />
+              United Kingdom <br /><br />
+              <strong>Phone:</strong> +44 454646 575<br />
+              <strong>Email:</strong> students@shu.com<br />
+            </p>
+          </div>
+  
+          <div class="col-lg-2 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><a href="{% url 'home' %}">Home</a></li>
+              <li><a href="{% url 'about' %}">About us</a></li>
+              <li><a href="#">Services</a></li>
+              <li><a href="#">Terms of service</a></li>
+            </ul>
+          </div>
+  
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Our Courses</h4>
+            <div class="col-md-6">
               <ul>
+                {% for course in courses %}
                 <li>
-                  <i class="bx bx-chevron-right"></i> <a href="#">Home</a>
+                  <a href="{% url 'course_list_modules' course.id %}">{{ course.name }}</a>
                 </li>
-                <li>
-                  <i class="bx bx-chevron-right"></i> <a href="#">About us</a>
-                </li>
-                <li>
-                  <i class="bx bx-chevron-right"></i> <a href="#">Services</a>
-                </li>
-                <li>
-                  <i class="bx bx-chevron-right"></i>
-                  <a href="#">Terms of service</a>
-                </li>
+                {% empty %}
+                
+                    <li>
+                      <i class="bx bx-chevron-right"></i>
+                      <a href="#">Msc Computing</a>
+                    </li>
+                    <li>
+                      <i class="bx bx-chevron-right"></i>
+                      <a href="#">Msc Web Development</a>
+                    </li>
+                    <li>
+                      <i class="bx bx-chevron-right"></i>
+                      <a href="#">Msc Product Management</a>
+                    </li>
+                
+                  
+                {% endfor %}
               </ul>
             </div>
-
-            <div class="col-lg-3 col-md-6 footer-links">
-              <h4>Our Courses</h4>
-              <ul>
-                <li>
-                  <i class="bx bx-chevron-right"></i>
-                  <a href="#">Msc Computing</a>
-                </li>
-                <li>
-                  <i class="bx bx-chevron-right"></i>
-                  <a href="#">Msc Web Development</a>
-                </li>
-                <li>
-                  <i class="bx bx-chevron-right"></i>
-                  <a href="#">Msc Product Management</a>
-                </li>
-                <li>
-                  <i class="bx bx-chevron-right"></i>
-                  <a href="#">Msc Marketing</a>
-                </li>
-                <li>
-                  <i class="bx bx-chevron-right"></i>
-                  <a href="#">Msc Graphic Design</a>
-                </li>
-              </ul>
-            </div>
-
-            <div class="col-lg-4 col-md-6 footer-newsletter">
-              <h4>Join Our Newsletter</h4>
-              <form action="" method="post">
-                <input type="email" name="email" /><input
-                  type="submit"
-                  value="Subscribe"
-                />
-              </form>
-            </div>
+          </div>
+  
+          <div class="col-lg-4 col-md-6 footer-newsletter">
+            <h4>Join Our Newsletter</h4>
+            <form action="" method="post">
+              <input type="email" name="email" /><input
+                type="submit"
+                value="Subscribe"
+              />
+            </form>
           </div>
         </div>
       </div>
-
-      <div class="container d-md-flex py-4">
-        <div class="me-md-auto text-center text-md-start">
-          <div class="copyright">
-            &copy; Copyright <strong><span>Group 3</span></strong
-            >. All Rights Reserved
-          </div>
-        </div>
-        <div class="social-links text-center text-md-end pt-3 pt-md-0">
-          <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-          <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-          <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-          <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-          <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+    </div>
+  
+    <div class="container d-md-flex py-4">
+      <div class="me-md-auto text-center text-md-start">
+        <div class="copyright">
+          &copy; Copyright <strong><span>Group 2</span></strong>. All Rights Reserved
         </div>
       </div>
-    </footer>
+      <div class="social-links text-center text-md-end pt-3 pt-md-0">
+        <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+        <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+        <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+        <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+        <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+      </div>
+    </div>
+  </footer>  
     <!-- End Footer -->
 
     <!-- Optional JavaScript -->

@@ -5,29 +5,17 @@
 <!-- Course and Modules Section -->
 
 <div class="col-md-8 m-3">
-  <h3>{{ course.name }}</h3>
+  <h3 class="mb-4">{{ course.name }}</h3>
   <div class="list-group">
     {% for module in modules %}
-      <div class="list-group-item">
-        <h5><a href="{% url 'module_detail' module.code %}">{{ module.name }}</a></h5>
-
+      <div class="list-group-item mb-3">
+        <h5 class="mb-0"><a href="{% url 'module_detail' module.code %}">{{ module.name }}</a></h5>
+        <small class="text-muted">{{ module.description }}</small>
       </div>
     {% endfor %}
-    <main>
-      <div class="wrapper" data-for="article">
-        <article class="card" data-for="article".card{container-type:inline-size;}
-        @ container (min-width: 50ch) {.info{grid-column: 2;}}>
-          <img src="https://picsum.photos/300/200?random=2" alt="">
-          <div class="flex ">
-            <h2>some Module</h2>
-            <p>Module description</p>
-          </div>
-        </article>
-      </div>
-      </div>
-    </main>
   </div>
 </div>
+
 
 {% endblock %}
 

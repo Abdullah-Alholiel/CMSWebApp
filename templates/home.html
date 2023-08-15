@@ -8,44 +8,55 @@
 </div>
 
 <div class="row pl-5 pr-5">
-  <!-- Course List -->
   <div class="col-md-6">
-    <h3>List of Courses</h3>
-    <ul>
-      {% for course in courses %}
-      <li>
-        <a href="{% url 'course_list_modules' course.id %}">{{ course.name }}</a>
-      </li>
-      {% empty %}
-      <li>No courses available.</li>
-      {% endfor %}
-    </ul>
+    <div class="bg-light p-4">
+      <h3>List of Courses</h3>
+      <ul class="list-group">
+        {% for course in courses %}
+        <li class="list-group-item">
+          <a href="{% url 'course_list_modules' course.id %}">{{ course.name }}</a>
+        </li>
+        {% empty %}
+        <li class="list-group-item">No courses available.</li>
+        {% endfor %}
+      </ul>
+    </div>
   </div>
-  {% block sidebar %}
-  <!-- Sidebar for Weather Data and Other Lists -->
-  <div class="col-md-6">
-    <h3>Current Weather</h3>
-    <p class="text-muted">Cities across United Kingdom</p>
-    <ul class="list-group">
-      {% for weather in weather_data %}
-      <li class="list-group-item list-group-item-light">
-        {{ weather.city }}: {{ weather.description }}, {{ weather.temperature}}&deg;C
-      </li>
-      {% endfor %}
-    </ul>
-     <h3>Other Information</h3>
 
-    <ul class="list-group">
-      <li class="list-group-item list-group-item-light">
-        Latest Issues Reported
-      </li>
-      <li class="list-group-item list-group-item-light">IT Policies</li>
-      <li class="list-group-item list-group-item-light">IT Regulations</li>
-      <li class="list-group-item list-group-item-light">Upcoming Events</li>
-    </ul>
+  <div class="col-md-6">
+    <div class="bg-light p-4">
+      <h3>Welcome to Our Platform</h3>
+      <p class="text-muted">Discover a world of knowledge and learning opportunities.</p>
+    </div>
   </div>
-  {% endblock sidebar %}
+
+  <div class="col-md-6">
+    <div class="bg-light p-4 mt-4">
+      <h3>Current Weather</h3>
+      <p class="text-muted">Cities across the United Kingdom</p>
+      <ul class="list-group">
+        {% for weather in weather_data %}
+        <li class="list-group-item">
+          {{ weather.city }}: {{ weather.description }}, {{ weather.temperature }}&deg;C
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="bg-light p-4 mt-4">
+      <h3>Other Information</h3>
+      <ul class="list-group">
+        <li class="list-group-item">Latest Issues Reported</li>
+        <li class="list-group-item">IT Policies</li>
+        <li class="list-group-item">IT Regulations</li>
+        <li class="list-group-item">Upcoming Events</li>
+      </ul>
+    </div>
+  </div>
 </div>
+
+
 <div class="container-fluid col-md-12">
   <div
     id="myCarousel"
@@ -53,7 +64,7 @@
     data-ride="carousel"
   >
     <div class="carousel-inner row w-100 mx-auto">
-      {% for Course in courses %}
+      {% for course in courses %}
       <div
         class="carousel-item col-md-4 {% if forloop.first %}active{% endif %}"
       >
@@ -64,15 +75,13 @@
             alt="Card image cap"
           />
           <div class="card-body">
-            <div> 
-              <h4 class="card-title">{{ Course.name }}</h4>
+            <div>
+              <h4 class="card-title">{{ course.name }}</h4>
             </div>
-            <div> 
-            <p class="card-text">{{ Course.description }}</p>
+            <div>
+              <p class="card-text">{{ course.description }}</p>
             </div>
-            <div> 
-            <p class="card-text">Category: {{ Course. }}</p>
-            </div>
+          
           </div>
         </div>
       </div>
@@ -98,6 +107,9 @@
     </a>
   </div>
 </div>
+
+
+
 <!-- ======= Hero Section ======= -->
 <section id="hero" class="d-flex align-items-center">
   <div class="container" data-aos="zoom-out" data-aos-delay="100">
