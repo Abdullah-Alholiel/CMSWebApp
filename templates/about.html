@@ -1,42 +1,63 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <!-- Internal Navigation Section -->
-  <div class="col-md-12">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#about">About University</a>
-      <a class="navbar-brand" href="#courses">Courses and Modules</a>
-      <a class="navbar-brand" href="#contact">Contact Information</a>
-    </nav>
-  </div>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="card mb-4">
+        <img src="https://cmswebapp2091021.blob.core.windows.net/media/student_photos/tabs-4.jpg" class="card-img-top" alt="About Us Image">
+        <div class="card-body">
+          <h2 class="card-title">About SHU University</h2>
+          <p class="card-text">SHU University is a leading institution dedicated to </p>
 
-  <!-- About University Section -->
-  <div id="about" class="col-md-12">
-    <h2>About OpenAI University</h2>
-    <p>OpenAI University is a leading institution dedicated to advancing knowledge and promoting student success through an enriching academic experience. Our research-focused curriculum and commitment to innovation make us an ideal choice for students pursuing high-quality higher education.</p>
-  </div>
+            <br> 
+            <p class="card-text text-left">advancing knowledge and promoting student success </p>
 
-  <!-- Courses and Modules Section -->
-  <div id="courses" class="col-md-8">
-    <h3>Courses and Modules</h3>
-    <ul class="list-group">
-      <li class="list-group-item list-group-item-light">
-        <h4>Computer Science</h4>
-        <ul>
-          <li>Module 1: Introduction to Programming</li>
-          <li>Module 2: Data Structures</li>
-          <li>Module 3: Algorithms</li>
-        </ul>
-      </li>
-      <li class="list-group-item list-group-item-light">
-        <h4>Data Science</h4>
-        <ul>
-          <li>Module 1: Statistics</li>
-          <li>Module 2: Machine Learning</li>
-        </ul>
-      </li>
-    </ul>
+            <br> 
+            <p class="card-text text-left">through an enriching academic experience. </p>
+
+            <br> 
+            <p class="card-text text-left">Our research-focused curriculum and commitment to </p>
+
+            <br> 
+            <p class="card-text text-left"> innovation make us an ideal choice for students  </p>
+
+            <br> 
+            <p class="card-text text-left"> pursuing high-quality higher education. </p>
+
+            <br> 
+          
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">Our Vision</h3>
+
+          <p class="card-text">To be a global center of excellence for education, </p>
+          <br> 
+          <p class="card-text text-left"> research, and innovation, fostering a diverse and </p>
+          <br> 
+          <p class="card-tex text-leftt">  inclusive community of learners, scholars, and leaders. </p>
+        </div>
+      </div>
+      <div class="card mt-4">
+        <div class="card-body">
+          <h3 class="card-title">Our Mission</h3>
+          <p class="card-text">We are committed to providing transformative  </p>
+          <br> 
+          <p class="card-text text-left">  education, impactful research, and engaged service, </p>
+          <br> 
+          <p class="card-text text-left">  guided by principles of integrity, collaboration,  </p>
+          <br> 
+          <p class="card-text text-left">  and social responsibility. </p>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
+
 {% endblock %}
 
 {% block sidebar %}
