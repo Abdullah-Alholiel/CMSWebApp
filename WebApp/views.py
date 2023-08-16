@@ -9,6 +9,8 @@ from django.contrib.auth.models import Group
 from youtubesearchpython import VideosSearch
 from requests import get
 import requests
+from django.views.generic import ListView
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Home page view
 def home(request):
@@ -170,6 +172,12 @@ def book(request):
         context = {'form': form, 'courses': courses}
     return render(request, "book.html", context)
 
+class PostListView(ListView):
+    model = Student
+    template_name = 'template/module_detail.html'
+    context_object_name = 'registered_students'
+    paginate_by = 1
+    
 
 def module_detail(request, module_code):
     module = get_object_or_404(Module, code=module_code)
@@ -177,54 +185,45 @@ def module_detail(request, module_code):
     registration_form = ModuleRegistrationForm(initial={'module': module})
     unregistration_form = ModuleUnregistrationForm(initial={'module': module})
     registered_students = Registration.objects.filter(module=module)
-    print(student)
+
+    paginator = Paginator(registered_students, 2)  # Show 1 student per page for demo
+
+    page = request.GET.get('page')
+    try:
+        students_page = paginator.page(page)
+    except PageNotAnInteger:
+        students_page = paginator.page(1)
+    except EmptyPage:
+        students_page = paginator.page(paginator.num_pages)
 
     if not student:
-        return render(request, 'module_detail.html', {
-            'module': module,
-            'is_registered': False,
-            'registration_form': registration_form,
-            'unregistration_form': unregistration_form,
-            'registered_students': registered_students,
-            'is_students':False
-        })
+        is_students = False
+        is_registered = False
+    else:
+        is_students = True
+        is_registered = Registration.objects.filter(student=student, module=module).exists()
 
-    # Check if the student is registered for the module
-    is_registered = Registration.objects.filter(student=student, module=module).exists()
-    # Handle Module Registration
     if request.method == 'POST':
         if 'register' in request.POST:
             registration_form = ModuleRegistrationForm(request.POST)
-            if registration_form.is_valid():
-                if not is_registered:
-                    registration = registration_form.save(commit=False)
-                    registration.student = student
-                    registration.module = module
-                    registration.save()
-                    is_registered=True
-
+            if registration_form.is_valid() and not is_registered:
+                registration = registration_form.save(commit=False)
+                registration.student = student
+                registration.module = module
+                registration.save()
+                is_registered = True
         elif 'unregister' in request.POST:
             unregistration_form = ModuleUnregistrationForm(request.POST)
             if unregistration_form.is_valid():
                 is_registered = False
-                # Find the registration entry and delete it
                 registration_entry = Registration.objects.filter(student=student, module=module)
                 registration_entry.delete()
-
-        return render(request, 'module_detail.html', {
-            'module': module,
-            'is_registered': is_registered,
-            'registration_form': registration_form,
-            'unregistration_form': unregistration_form,
-            'registered_students': registered_students,
-            'is_students': True
-        })
 
     return render(request, 'module_detail.html', {
         'module': module,
         'is_registered': is_registered,
         'registration_form': registration_form,
         'unregistration_form': unregistration_form,
-        'registered_students': registered_students,
-        'is_students': True
+        'registered_students': students_page,  # Note: Pass the paginated object here
+        'is_students': is_students
     })
