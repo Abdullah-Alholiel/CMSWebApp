@@ -15,9 +15,10 @@ def home(request):
     user = request.user
     template_name = "home.html"
     courses = StudentGroup.objects.all()
+    modules = Module.objects.all() 
     api_key = 'b18758d6289ebcfc5d2a847e86d253e5'
     url = 'https://api.openweathermap.org/data/2.5/weather?q={},{}&units=metric&appid={}'
-
+    
     cities = ['London', 'Sheffield', 'Liverpool', 'Manchester']
 
     weather_data = []
@@ -25,7 +26,6 @@ def home(request):
     for city in cities:
         try:
             city_weather = requests.get(url.format(city, 'UK', api_key)).json()
-            print(city_weather)  # Debugging print statement
             weather = {
                 'city': city_weather['name'],
                 'temperature': city_weather['main']['temp'],
@@ -35,12 +35,11 @@ def home(request):
         except Exception as e:
             print(f"Error fetching weather data for {city}: {str(e)}")
 
-    context = {"user": user, 'courses': courses, 'weather_data': weather_data}
+    context = {"user": user, 'courses': courses,'modules': modules, 'weather_data': weather_data}
     return render(request, template_name, context)
 
 def about_us(request):
     courses = StudentGroup.objects.all()
-      
     return render(request, 'about.html', {'courses': courses})
 
 
