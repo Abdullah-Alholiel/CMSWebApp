@@ -33,16 +33,62 @@
         </button>
       </form>
       {% endif %}
+        
+      
+      <div class="container mt-5">
+        <!-- ... [rest of the content] -->
+        <div class="mt-5">
+            <h2>Student Registrations</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last  Name</th>
+                        <th>Email</th>
+                        <th>Module Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for registration in registered_students %}
+                    <tr>
+                        <td>{{ registration.student.user.first_name }}</td>
+                        <td>{{ registration.student.user.last_name }}</td>
+                        <td>{{ registration.student.user.email }}</td>
+                        <td>{{ module.name  }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
-      <div class="mt-5 mb-5">
-        <h2>Registered Students:</h2>
-        <ul class="list-unstyled">
-          {% for registration in registered_students %}
-          <li>{{ registration.student.user.username }}</li>
-          {% endfor %}
-        </ul>
+          <!-- Pagination Controls -->
+      <div class="pagination">
+        <span class="step-links">
+            {% if registered_students.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ registered_students.previous_page_number }}">previous</a>
+            {% endif %}
+            <span class="current">
+                Page {{ registered_students.number }} of {{ registered_students.paginator.num_pages }}.
+            </span>
+            {% if registered_students.has_next %}
+                <a href="?page={{ registered_students.next_page_number }}">next</a>
+                <a href="?page={{ registered_students.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
       </div>
     </div>
+  </div>
+</div>
+
+        <!-- ... [rest of the content] -->
+    </div>
+      
+
+  </div>
+
+      
+  </div>
   </div>
 </div>
 
