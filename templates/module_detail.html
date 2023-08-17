@@ -80,15 +80,88 @@
     </div>
   </div>
 </div>
+<button id="load-recommended-books">Load Recommended Books</button>
 
-        <!-- ... [rest of the content] -->
+<div id="recommended-books">
+  <h3>Recommended Books</h3>
+  <div id="books-list"></div>
+</div>
+
+
+
+
+
     </div>
-      
-
   </div>
 
-      
-  </div>
+  
+  {% block jquery %}
+  <!-- jQuery (full version) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  {% endblock  %}
+    
+
+
+  <!-- <script>
+      $(document).ready(function() {
+         $("#load-recommended-books").click(function() { 
+          
+        const moduleName = "{{ module.name }}";
+  
+          // Adjust this URL to point to your Azure Function URL
+          const azureFunctionURL = `http://127.0.0.1:7071/api/modulebooks`;
+  
+          $.get(azureFunctionURL, { 
+              text: moduleName
+          }, function(data) {
+            alert("{{module.name}}");
+              var booksHTML = '';
+              data.forEach(function(book) {
+                  booksHTML += `<div class="book">
+                      <h4>${book.title}</h4>
+                      <a href="${book.preview}" target="_blank"><img src="${book.thumbnail}" alt="${book.title}"></a>
+                  </div>`;
+              });
+              $("#books-list").html(booksHTML);
+          });
+        });
+        });
+  </script> -->
+  
+  <script>
+    $(document).ready(function() {
+        $("#load-recommended-books").click(function() {
+            var moduleName = "{{ module.name }}";
+
+            // Adjust this URL to point to your Azure Function URL
+            const azureFunctionURL = `http://127.0.0.1:7071/api/modulebooks`;
+
+            $.ajax({
+                url: azureFunctionURL,
+                method: "GET",
+                data: {
+                    name: moduleName
+                },
+                success: function(data) {
+                    var booksHTML = '';
+                    data.forEach(function(book) {
+                        booksHTML += `<div class="book">
+                            <h4>${book.title}</h4>
+                            <a href="${book.preview}" target="_blank"><img src="${book.thumbnail}" alt="${book.title}"></a>
+                        </div>`;
+                    });
+                    $("#books-list").html(booksHTML);
+                },
+                error: function(error) {
+                    console.error("Error fetching data:", error);
+                }
+            });
+        });
+    });
+</script>
+
+
+</div>
   </div>
 </div>
 
