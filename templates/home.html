@@ -3,15 +3,19 @@
 {% block content %}
 
 <!-- Welcome Section -->
-<div class="col-md-12 text-center p-4">
-  <h3>Welcome - {{ user.first_name }} {{ user.last_name }}</h3>
-</div>
+<section class="container mt-5 ">
+  <div class="row">
+      <div class="col-md-12 text-center">
+          <h2 class="mb-4"> Welcome {{ user.first_name }} {{ user.last_name }} to SHU CMS 🤗</h2>
+      </div>
+  </div>
+  <div class=" container text-muted text-center col-md-10">
+    <caption>Welcome to Our Platform </caption>
+    <p class="text-muted">Discover a world of knowledge and learning opportunities.</p>
+  </div>
+  <div class="col-md-6">
+</section>
 
-<!-- Introduction Section -->
-<div class="container text-center py-5">
-  <h3>Welcome to Our Platform</h3>
-  <p class="text-muted">Discover a world of knowledge and learning opportunities.</p>
-</div>
 
 <!-- Courses and Weather Sections -->
 <div class="container-fluid px-5">
@@ -26,7 +30,7 @@
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">{{ course.name }}</h5>
-                <p class="card-text">{{ course.description }}</p>
+                <p class="card-text text-left">{{ course.description }}</p>
                 <a href="{% url 'course_list_modules' course.id %}" class="btn btn-primary">View Course</a>
               </div>
             </div>
