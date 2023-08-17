@@ -1,57 +1,61 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
 
-
+{% block content %}
 
 <!-- Welcome Section -->
-<section class="container mt-5 ">
-  <div class="row">
-      <div class="col-md-12 text-center">
-          <h2 class="mb-4"> Welcome {{ user.first_name }} {{ user.last_name }} to SHU CMS 🤗</h2>
-      </div>
-  </div>
-
-  <div class=" container text-muted text-center col-md-10">
-    <caption>Welcome to Our Platform </caption>
-    <p class="text-muted">Discover a world of knowledge and learning opportunities.</p>
-  </div>
-  <div class="col-md-6">
-
-</section>
-
-<!-- Welcome Section with Background Image -->
-<div class="welcome-section"  background-size: cover; padding: 50px 0; display: flex; justify-content: center; align-items: center;">
-  <div class="content-wrapper d-flex">
-      <!-- List of Courses Section -->
-      <div class="course-section bg-light p-4 rounded flex-grow-1 mr-3">
-          <h3 class="mb-3">List of Courses</h3>
-          <ul class="list-group">
-              {% for course in courses %}
-              <li class="list-group-item">
-                  <a href="{% url 'course_list_modules' course.id %}">{{ course.name }}</a>
-              </li>
-              {% empty %}
-              <li class="list-group-item">No courses available.</li>
-              {% endfor %}
-          </ul>
-      </div>
-
-      <!-- Weather Section -->
-      <div class="weather-section bg-light p-4 rounded flex-grow-1 ml-3">
-          <h3 class="mb-3">Current Weather</h3>
-          <p class="text-muted mb-3">Cities across the United Kingdom</p>
-          <ul class="list-group">
-              {% for weather in weather_data %}
-              <li class="list-group-item">
-                  {{ weather.city }}: {{ weather.description }}, {{ weather.temperature }}&deg;C
-              </li>
-              {% empty %}
-              <li class="list-group-item">No weather data available.</li>
-              {% endfor %}
-          </ul>
-      </div>
-  </div>
+<div class="col-md-12 text-center p-4">
+  <h3>Welcome - {{ user.first_name }} {{ user.last_name }}</h3>
 </div>
 
+<!-- Introduction Section -->
+<div class="container text-center py-5">
+  <h3>Welcome to Our Platform</h3>
+  <p class="text-muted">Discover a world of knowledge and learning opportunities.</p>
+</div>
+
+<!-- Courses and Weather Sections -->
+<div class="container-fluid px-5">
+  <div class="row mb-4">
+    <!-- Courses Section -->
+    <div class="col-md-6">
+      <div class="bg-light p-4">
+        <h3>List of Courses</h3>
+        <div class="row">
+          {% for course in courses %}
+          <div class="col-md-6 mb-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">{{ course.name }}</h5>
+                <p class="card-text">{{ course.description }}</p>
+                <a href="{% url 'course_list_modules' course.id %}" class="btn btn-primary">View Course</a>
+              </div>
+            </div>
+          </div>
+          {% empty %}
+          <div class="col-md-12">
+            <p class="text-muted">No courses available.</p>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    
+    <!-- Weather Section -->
+    <div class="col-md-6">
+      <div class="bg-light p-4">
+        <h3>Current Weather</h3>
+        <p class="text-muted">Cities across the United Kingdom</p>
+        <ul class="list-group">
+          {% for weather in weather_data %}
+          <li class="list-group-item">
+            {{ weather.city }}: {{ weather.description }}, {{ weather.temperature }}&deg;C
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Carousel Section -->
 <section id="carousel" class="carousel-section d-md-flex">
@@ -91,29 +95,18 @@
   </div>
 </section>
 
-
-
-
-
-
-
-<!-- ======= Hero Section ======= -->
+<!-- Hero Section -->
 <section id="hero" class="d-flex align-items-center">
   <div class="container" data-aos="zoom-out" data-aos-delay="100">
     <div class="row">
-      <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-        <h1>Bettter Education experience with SHU</h1>
-<<<<<<< HEAD
-        <h2>We are a team of talented tutors providing students with excellence</h2>
-        <a href="#about" class="btn-get-started scrollto">Get Started</a>
-=======
-        <h2>We are team of talented tutors making student with excellence</h2>
-        <a href="about" class="btn-get-started scrollto">Get Started 🥳</a>
->>>>>>> main
+      <div class="col-12 text-center">
+        <h1>Better Education Experience with SHU</h1>
+        <h2>We are a team of talented tutors dedicated to student excellence</h2>
+        <a href="about" class="btn btn-get-started scrollto">Get Started 🎉</a>
       </div>
     </div>
   </div>
 </section>
 <!-- End Hero -->
 
-{% endblock %}
+{% endblock content %}
