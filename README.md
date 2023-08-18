@@ -58,10 +58,7 @@
 ## 🔐 Environment Variables:
 To ensure the application runs smoothly, configure the necessary environment variables, including Azure connection keys and URLs.
 
-# Django secret key
-SECRET_KEY=django-insecure-^25r)qz9+dypwmrqf2yue6yuzd^()p^%$r03d+evn8y#*@c^36
-
-
+Deployed website ---> cmswebapp-c2091021@azurewebsites.net
 
 
 # Resource Group Url's
